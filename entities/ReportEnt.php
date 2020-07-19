@@ -4,6 +4,30 @@
 class ReportEnt
 {
     protected $content;
+    protected $createdAt;
+    protected $userid;
+
+    public function __construct()
+    {
+        $this->createdAt = new DateTime();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserid()
+    {
+        return $this->userid;
+    }
+
+    /**
+     * @param mixed $userid
+     */
+    public function setUserid($userid)
+    {
+        $this->userid = $userid;
+    }
+
 
     /**
      * @return mixed
@@ -11,6 +35,22 @@ class ReportEnt
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
     }
 
     /**

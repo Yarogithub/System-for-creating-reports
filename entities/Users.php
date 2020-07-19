@@ -37,7 +37,7 @@ class Users
      */
     public function setPassword($password)
     {
-        $this->password = Hash::create('sha256', $password, HASH_PASSWORD_KEY);
+        $this->password = $password;
     }
 
     /**

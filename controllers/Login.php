@@ -17,11 +17,11 @@ class Login extends Controllers
 
     function run()
     {
-        $Users = new Users();
-        $Users ->setLogin($_POST['login']);
-        $Users ->setPassword($_POST['password']);
-        $Users ->setRole($_POST['role']);
-        $this->model->run($Users);
+        $users = new Users();
+        $users ->setLogin($_POST['login']);
+        $users ->setPassword($_POST['password']);
+        $users ->setRole($_POST['role']);
+        $this->model->run($users);
     }
 
 //    function reportRun()

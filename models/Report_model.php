@@ -8,13 +8,32 @@ class Report_model extends Model
         parent::__construct();
     }
 
-    public function reportsList()
+    public function reportsEmployeeList($userid)
     {
-        return $this->db->selectAll('SELECT raportid,content FROM report where user.userid=report.userid');
-
-        /*$sth = $this->db->prepare('SELECT userid, login, role FROM user');
-        $sth->execute();
-        return $sth->fetchAll();*/
+        return $this->db->selectAll('SELECT r.reportid,r.content,r.createdAt FROM report as r,user as u where u.userid=r.userid and u.userid = :userid',
+            [
+                ':userid' => $userid
+            ]);
     }
+
+    public function reportsAdminList()
+    {
+        return $this->db->selectAll('SELECT * FROM report as r,user as u where u.userid=r.userid ');
+
+    }
+
+    public function create(ReportEnt $report)
+    {
+        $this->db->insert('report',
+        [
+           'userid'=> $report->getUserid(),
+           'content'=> $report->getContent(),
+            'createdAt'=>$report->getCreatedAt()->format('Y-m-d H:i:s')
+        ]);
+
+
+
+    }
+
 
 }

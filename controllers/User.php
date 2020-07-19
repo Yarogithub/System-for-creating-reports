@@ -19,12 +19,36 @@ class User extends Controllers
 
     public function create()
     {
-        $Users = new Users();
-        $Users ->setLogin($_POST['login']);
-        $Users ->setPassword($_POST['password']);
-        $Users ->setRole($_POST['role']);
-//        $Users ->setUserId($_POST['id']);
-        $this->model->create($Users);
+        $users = new Users();
+        $users ->setLogin($_POST['login']);
+        $users ->setPassword($_POST['password']);
+        $users ->setRole($_POST['role']);
+        $this->model->create($users);
+        header('location: ' . URL . 'user');
+    }
+
+    public function edit($userid)
+    {
+        $this->view->title = 'User: Edit';
+        $this->view->user = $this->model->userSingleList($userid);
+        $this->view->render('user/edit');
+    }
+
+    public function editSave($userid)
+    {
+        $userEdit = new Users();
+        $userEdit->setUserId($userid);
+        $userEdit ->setLogin($_POST['login']);
+        $userEdit ->setPassword($_POST['password']);
+        $userEdit ->setRole($_POST['role']);
+        $this->model->editSave($userEdit);
+        header('location: ' . URL . 'User');
+    }
+
+    public function delete($userid)
+    {
+        $this->model->delete($userid);
+        header('location: ' . URL . 'user');
     }
 
 }

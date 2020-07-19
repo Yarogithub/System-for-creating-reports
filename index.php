@@ -2,6 +2,7 @@
 
 require 'config.php';
 require 'entities/Users.php';
+require 'entities/ReportEnt.php';
 require 'utilities/Auth.php';
 //require 'util/Auth.php';
 //
@@ -16,7 +17,7 @@ require 'libs/Bootstrap.php';
 require 'libs/Controllers.php';
 require 'libs/Model.php';
 require 'libs/View.php';
-require 'libs/Hash.php';
+
 //
 //// Library
 require 'libs/Database.php';

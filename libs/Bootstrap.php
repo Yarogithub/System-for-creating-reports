@@ -20,6 +20,7 @@ class Bootstrap {
 		// Sets the protected $_url
 		$this->_getUrl();
 
+
         // Load the default controller if no URL is set
         // eg: Visit http://localhost it loads Default Controller
 		if (empty($this->_url[0])) {
@@ -100,6 +101,7 @@ class Bootstrap {
 	private function _loadExistingController()
 	{
 		$file = $this->_controllerPath . $this->_url[0] . '.php';
+
 		if (file_exists($file)) {
 			require $file;
 			$this->_controller = new $this->_url[0];
@@ -167,10 +169,12 @@ class Bootstrap {
      * @return boolean
      */
 	private function _error() {
-		require $this->_controllerPath . $this->_errorFile;
-		$this->_controller = new Err();
-		$this->_controller->index();
-		exit;
+
+        require $this->_controllerPath . $this->_errorFile;
+        $this->_controller = new Err();
+        $this->_controller->index();
+        exit;
+
 		//return false;
 	}
 

@@ -19,6 +19,7 @@
     <a href="<?php echo URL; ?>index">Index</a>
     <?php endif; ?>
     <?php if (Session::get('loggedIn') == true):?>
+        <a href="<?php echo URL; ?>index">Index</a>
         <a href="<?php echo URL; ?>Report">Reports</a>
         <?php if (Session::get('role') == 'admin'):?>
             <a href="<?php echo URL; ?>User">Users</a>

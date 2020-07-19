@@ -16,7 +16,7 @@ class Database extends PDO
      * @param constant $fetchMode A PDO Fetch mode
      * @return mixed
      */
-    public function selectAll($sql, $array = array(), $fetchMode = PDO::FETCH_ASSOC)
+    public function selectAll($sql, $array = [], $fetchMode = PDO::FETCH_ASSOC)
     {
         $sth = $this->prepare($sql);
         foreach ($array as $key => $value) {
@@ -34,7 +34,7 @@ class Database extends PDO
      * @param constant $fetchMode A PDO Fetch mode
      * @return mixed
      */
-    public function selectOne($sql, $array = array(), $fetchMode = PDO::FETCH_ASSOC)
+    public function selectOne($sql, $array = [], $fetchMode = PDO::FETCH_ASSOC)
     {
         $sth = $this->prepare($sql);
         foreach ($array as $key => $value) {
@@ -65,7 +65,14 @@ class Database extends PDO
             $sth->bindValue(":$key", $value);
         }
 
+
         $sth->execute();
+
+
+//        echo '<pre>';
+//        print_r($test);
+//        print_r($sth);
+//        die;
     }
 
     /**

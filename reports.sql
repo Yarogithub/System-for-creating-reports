@@ -31,7 +31,7 @@ SET time_zone = "+00:00";
 CREATE TABLE if not exists `user` (
   `userid` int AUTO_INCREMENT PRIMARY KEY ,
   `login` varchar(25) COLLATE utf8_polish_ci NOT NULL,
-  `password` varchar(64) COLLATE utf8_polish_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_polish_ci NOT NULL,
   `role` enum('employee','admin') COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
@@ -58,8 +58,9 @@ CREATE TABLE if not exists `report` (
   `reportid` int AUTO_INCREMENT PRIMARY KEY,
   `userid` int(11),
    FOREIGN KEY (userid)  REFERENCES user(userid),
-  `content` text COLLATE utf8_polish_ci NOT NULL
+  `content` text COLLATE utf8_polish_ci NOT NULL,
+  `createdAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
-INSERT INTO `report` (`userid`, `content`) VALUES
-(2, 'Kiedys to bylo');
+INSERT INTO `report` (`userid`, `content`,`createdAt` ) VALUES
+(3, 'Kiedys to bylo','2020-07-14 13:33:48');

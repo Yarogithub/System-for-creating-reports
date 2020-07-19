@@ -13,7 +13,6 @@
 
 <table>
 <?php
-	//print_r($this);
 	foreach($this->userList as $key => $value)
 	{
 		echo '<tr>';

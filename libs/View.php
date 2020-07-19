@@ -8,7 +8,9 @@ class View
      */
     public $title;
     public $userList;
-    public $reportsList;
+    public $user;
+    public $reportsEmployeeList;
+    public $reportsAdminList;
 
     function __construct() {
         //echo 'this is the view';
