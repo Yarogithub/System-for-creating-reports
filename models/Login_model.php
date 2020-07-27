@@ -8,22 +8,6 @@ class Login_model extends Model
         parent::__construct();
     }
 
-//    public function reportRun(ReportEnt $value)
-//    {
-//        $sth = $this->db->prepare("SELECT reportid, userid FROM report as r, user as u where r.userid = u.userid and content = :content ");
-//        $sth->execute(array(
-//            ':content' => $value->getContent()
-//        ));
-//
-//        $data = $sth->fetch();
-//
-//        Session::init();
-//        //Session::set('role', $data['role']);
-//        Session::set('loggedIn', true);
-//        Session::set('reportid', $data['reportid']);
-//        Session::set('userid', $data['userid']);
-//
-//    }
 
     public function run(Users $values)
     {
@@ -36,6 +20,7 @@ class Login_model extends Model
 
 
         $data = $sth->fetch();
+
 
 
         if (!(password_verify($values->getPassword(), $data['password'])))

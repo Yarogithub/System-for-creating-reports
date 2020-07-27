@@ -33,4 +33,28 @@ class Report extends Controllers
         $this->model->create($report);
         header('location: ' . URL . 'report');
      }
+
+    public function edit($reportId)
+    {
+        $this->view->title = 'Report: Edit';
+        $this->view->report = $this->model->reportsSingleRecord($reportId);
+        $this->view->render('report/edit');
+    }
+
+    public function editSave($reportId)
+    {
+        $reportEdit = new ReportEnt();
+        $reportEdit ->setContent($_POST['content']);
+        $reportEdit ->setUserid($_SESSION['userid']);
+        $reportEdit ->setReportid($reportId);
+        $this->model->editSave($reportEdit);
+        header('location: ' . URL . 'report');
+    }
+
+    public function delete($reportId)
+    {
+        $this->model->delete($reportId);
+        header('location: ' . URL . 'report');
+    }
+
 }

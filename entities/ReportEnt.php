@@ -6,6 +6,24 @@ class ReportEnt
     protected $content;
     protected $createdAt;
     protected $userid;
+    protected $reportid;
+
+    /**
+     * @return mixed
+     */
+    public function getReportid()
+    {
+        return $this->reportid;
+    }
+
+    /**
+     * @param mixed $reportid
+     */
+    public function setReportid($reportid)
+    {
+        $this->reportid = $reportid;
+    }
+
 
     public function __construct()
     {

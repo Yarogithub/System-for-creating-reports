@@ -22,6 +22,15 @@ class Report_model extends Model
 
     }
 
+    public function reportsSingleRecord($reportid)
+    {
+        return $this->db->selectOne('SELECT reportid, content FROM report WHERE reportid = :reportid',
+            [
+                ':reportid' => $reportid
+            ]);
+    }
+
+
     public function create(ReportEnt $report)
     {
         $this->db->insert('report',
@@ -32,6 +41,30 @@ class Report_model extends Model
         ]);
 
 
+
+    }
+
+    public function editSave(ReportEnt $reportEdit)
+    {
+        if(!$reportEdit->getReportid())
+        {
+           return;
+        }
+            $this->db->update('report',
+                [
+                    'userid'=> $reportEdit->getUserid(),
+                    'content'=> $reportEdit->getContent(),
+                    'createdAt'=>$reportEdit->getCreatedAt()->format('Y-m-d H:i:s')
+                ],
+                "`reportid` =" . $reportEdit->getReportid());
+
+
+    }
+
+    public function delete($reportId)
+    {
+    $this->db->delete('report', "reportid = $reportId", 1);
+//    delete from report where reportid=5
 
     }
 

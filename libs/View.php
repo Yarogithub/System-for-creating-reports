@@ -11,6 +11,7 @@ class View
     public $user;
     public $reportsEmployeeList;
     public $reportsAdminList;
+    public $report;
 
     function __construct() {
         //echo 'this is the view';
