@@ -27,6 +27,12 @@ class User extends Controllers
         header('location: ' . URL . 'user');
     }
 
+    public function createSave()
+    {
+        $this->view->title = 'User: Add';
+        $this->view->render('user/add');
+    }
+
     public function edit($userid)
     {
         $this->view->title = 'User: Edit';

@@ -24,6 +24,7 @@ class User_model extends Model
 
     public function create(Users $data)
     {
+
         $this->db->insert('user',
             [
             'login'=>$data->getLogin(),

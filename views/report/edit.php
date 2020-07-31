@@ -1,9 +1,12 @@
-<h1>Report: Edit</h1>
+<h1 class="text-white">Report: Edit</h1>
 
 
 <form method="post" action="<?php echo URL;?>report/editSave/<?php echo $this->report['reportid']; ?>">
-    <label>Report</label><textarea name="content" ><?php echo $this->report['content'];
-        ?></textarea>" <br />
-    <label>&nbsp;</label><input type="submit" />
+    <div class="form-group">
+    <label class="text-white" for="Report">Report</label>
+    <textarea class="form-control" id="Report" rows="8"><?php echo $this->report['content'];
+        ?></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 

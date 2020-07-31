@@ -34,6 +34,12 @@ class Report extends Controllers
         header('location: ' . URL . 'report');
      }
 
+     public function createSave()
+     {
+         $this->view->title = 'Report: Add';
+         $this->view->render('report/add');
+     }
+
     public function edit($reportId)
     {
         $this->view->title = 'Report: Edit';
