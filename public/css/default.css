@@ -1,22 +1,155 @@
 
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
-html,body{
-	background-color: #636363;
+body{
+	/*background-color: #636363;*/
+	/*background-color: white;*/
 	background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+ 	background-repeat: no-repeat;
 	background-size: cover;
-	background-repeat: no-repeat;
+	background-attachment: fixed;
 	height: 100%;
 	font-family: 'Numans', sans-serif;
+	margin-bottom: 50px;
 }
 
 
+footer
+{
+	position: fixed;
+	margin-top: 40px;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+}
 
+/* The Modal (background) */
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+	background-color: #fefefe;
+	margin: 15% auto; /* 15% from the top and centered */
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.table-wrapper {
+	margin: 30px;
+	background: #fff;
+	padding: 20px;
+	box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.table-title {
+	padding-bottom: 10px;
+	margin: 0 0 10px;
+}
+
+.table-title h2 {
+	margin: 6px 0 0;
+	font-size: 22px;
+}
+.table-title .add-new {
+	float: right;
+	height: 30px;
+	font-weight: bold;
+	font-size: 12px;
+	text-shadow: none;
+	min-width: 100px;
+	border-radius: 50px;
+	line-height: 13px;
+}
+.table-title .add-new i {
+	margin-right: 4px;
+}
+table.table {
+	table-layout: fixed;
+}
+table.table tr th, table.table tr td {
+	border-color: #e9e9e9;
+}
+table.table th i {
+	font-size: 13px;
+	margin: 0 5px;
+	cursor: pointer;
+}
+table.table th:last-child {
+	width: 100px;
+}
+table.table td a {
+	cursor: pointer;
+	display: inline-block;
+	margin: 0 5px;
+	min-width: 24px;
+}
+table.table td a.add {
+	color: #27C46B;
+}
+table.table td a.edit {
+	color: #FFC107;
+}
+table.table td a.delete {
+	color: #E34724;
+}
+table.table td i {
+	font-size: 19px;
+}
+table.table td a.add i {
+	font-size: 24px;
+	margin-right: -1px;
+	position: relative;
+	top: 3px;
+}
+table.table .form-control {
+	height: 32px;
+	line-height: 32px;
+	box-shadow: none;
+	border-radius: 2px;
+}
+table.table .form-control.error {
+	border-color: #f50000;
+}
+table.table td .add {
+	display: none;
+}
+
+td {
+	white-space: normal !important;
+}
 
 .container{
 	height: 100%;
-	align-content: center;
+	align-content: center !important;
 }
+
 
 .card{
 	height: 370px;
@@ -55,9 +188,7 @@ html,body{
 }
 
 input:focus{
-	outline: 0 0 0 0  !important;
 	box-shadow: 0 0 0 0 !important;
-
 }
 
 .remember{
@@ -96,70 +227,117 @@ input:focus{
 	min-height: 57px;
 }
 
-.reports
+.modal-backdrop {
+	position: relative !important;
+}
+
+.closeButton
 {
-	text-align: center;
+	margin-top: 1px;
+	margin-right: 2px;
+	position:absolute;
+	top:0;
+	right:0;
 }
 
-.footer {
-	position: fixed;
-	left: 0;
-	bottom: 0;
-	width: 100%;
-	text-align: center;
+#userCancel
+{
+	display: inline-block;
+}
+
+#message {
+	display:none;
+	background: #f1f1f1;
+	color: #000;
+	position: relative;
+	padding: 20px;
+	margin-top: 10px;
+}
+
+#message h6 {
+	margin-left: 20px;
+}
+
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+	color: green;
+}
+
+.valid:before {
+	position: relative;
+	left: -35px;
+	content: "&#10004;";
+}
+
+/* Add a red text color and an "x" icon when the requirements are wrong */
+.invalid {
+	color: red;
+}
+
+.invalid:before {
+	position: relative;
+	left: -35px;
+	content: "&#10006;";
+}
+
+#messageEdit {
+	display:none;
+	background: #f1f1f1;
+	color: #000;
+	position: relative;
+	padding: 20px;
+	margin-top: 10px;
+}
+
+#messageEdit h6 {
+	margin-left: 20px;
+}
+
+.iPosition {
+	position: absolute;
+	top: 58px;
+	right: 20px;
+}
+
+.iPositionpass
+{
+	position: absolute;
+	top: 167px;
+	right: 20px;
+}
+
+.form-group.success input {
+	border-color: #2ecc71;
+}
+
+.form-group.error input {
+	border-color: #e74c3c;
+}
+
+.form-group.success i.fa-check-circle {
+	visibility: visible;
+	color: #2ecc71;
+}
+
+.form-group.success i.fa-exclamation-circle {
+	visibility: visible;
+	color: #e74c3c;
+}
+
+.form-group small{
+	visibility: hidden;
+}
+
+.form-group.success small {
+	visibility: visible;
+	color: #2ecc71;
+}
+
+.form-group.success small {
+	visibility: visible;
+	color: #e74c3c;
 }
 
 
 
-/*form {*/
-/*	font: 100% verdana,arial,sans-serif;*/
-/*}*/
 
-/*form label { */
-/*	display: block;*/
-/*	float: left; */
-/*	width: 150px; */
-/*	padding: 0; */
-/*	margin: 9px 0 0;*/
-/*	text-align: right; */
-/*}*/
-
-/*form input, form select {*/
-/*	width: auto;*/
-/*	margin: 5px 0 0 10px;*/
-/*	border: 1px solid gray;*/
-/*	padding: 4px;*/
-/*}*/
-
-/*form input[type=submit]:hover {*/
-/*	cursor: pointer;*/
-/*	background: silver;*/
-/*}*/
-
-/*form br {clear: left;}*/
-
-/*textarea[name="content"]*/
-/*{*/
-/*	width: 500px;*/
-/*	height: 200px;*/
-/*}*/
-
-/*body {*/
-/*	background-color: #2F3336;*/
-/*	color: #efefef;*/
-/*	font-family: 'Open Sans', sans-serif;*/
-/*	font-size: 17px;*/
-/*	text-align: left;*/
-/*}*/
-
-
-/*h1*/
-/*{*/
-/*	font-size: 36px;*/
-/*	font-weight: 400;*/
-/*	color: #c0d06f;*/
-/*}*/
-
-/*!*background-color: #1f1f6c;*!*/
-/*background-color: #141617;*/
-/*background-blend-mode: luminosity;*/

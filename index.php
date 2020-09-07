@@ -1,18 +1,13 @@
 <?php
 
 require 'config.php';
+//require 'data.php';
 require 'entities/Users.php';
 require 'entities/ReportEnt.php';
+require 'validators/UserValidator.php';
+require 'validators/ReportValidator.php';
 require 'utilities/Auth.php';
-//require 'util/Auth.php';
-//
-////// Also spl_autoload_register (Take a look at it if you like)
-////function spl_autoload_register($class) {
-////	require LIBS . $class .".php";
-////}
-//
-//
-////Use an autoloader!
+
 require 'libs/Bootstrap.php';
 require 'libs/Controllers.php';
 require 'libs/Model.php';

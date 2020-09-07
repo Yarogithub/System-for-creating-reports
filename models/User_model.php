@@ -34,7 +34,7 @@ class User_model extends Model
     }
 
 
-    public function editSave(Users $data)
+    public function edit(Users $data)
     {
       $this->db->update('user',
           [
@@ -47,19 +47,31 @@ class User_model extends Model
 
     public function delete($userid)
     {
-        $sth = $this->db->prepare('SELECT role FROM user WHERE userid = :userid');
-        $sth->execute(
-            [
-                ':userid' => $userid
-            ]);
-        $data = $sth->fetch();
-        if ($data['role'] == 'admin')
-        {
-            return false;
-        }
+//        $sth = $this->db->prepare('SELECT role FROM user WHERE userid = :userid');
+//        $sth->execute(
+//            [
+//                ':userid' => $userid
+//            ]);
+//        $data = $sth->fetch();
+//        if ($data['role'] == 'admin')
+//        {
+//            return false;
+//        }
 
 
-        $this->db->delete('user', "userid = $userid");
+        $this->db->delete('user', "userid = $userid", 1);
+    }
+
+    /**
+     * @param $login
+     * @return mixed
+     */
+    public function getUserByLogin($login)
+    {
+        return $this->db->selectOne('SELECT * FROM user WHERE login = :login', [
+            'login'=>$login,
+        ]);
+
     }
 
 }

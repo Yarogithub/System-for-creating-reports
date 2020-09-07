@@ -10,7 +10,7 @@ class Report_model extends Model
 
     public function reportsEmployeeList($userid)
     {
-        return $this->db->selectAll('SELECT r.reportid,r.content,r.createdAt FROM report as r,user as u where u.userid=r.userid and u.userid = :userid',
+        return $this->db->selectAll('SELECT r.reportid, r.content,r.createdAt FROM report as r,user as u where u.userid=r.userid and u.userid = :userid',
             [
                 ':userid' => $userid
             ]);
@@ -44,7 +44,7 @@ class Report_model extends Model
 
     }
 
-    public function editSave(ReportEnt $reportEdit)
+    public function edit(ReportEnt $reportEdit)
     {
         if(!$reportEdit->getReportid())
         {
@@ -64,8 +64,6 @@ class Report_model extends Model
     public function delete($reportId)
     {
     $this->db->delete('report', "reportid = $reportId", 1);
-//    delete from report where reportid=5
-
     }
 
 

@@ -12,6 +12,10 @@ class View
     public $reportsEmployeeList;
     public $reportsAdminList;
     public $report;
+    /**
+     * @var string
+     */
+    public $msg;
 
     function __construct() {
         //echo 'this is the view';

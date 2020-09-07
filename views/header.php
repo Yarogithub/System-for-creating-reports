@@ -1,4 +1,5 @@
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
 <!doctype html>
 <html lang="pl">
 <head>
@@ -7,14 +8,31 @@
     <meta http-equiv="X-Ua-Compatible" content="IE=edge">
 
 	<title><?=(isset($this->title)) ? $this->title : 'Report'; ?></title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link rel="stylesheet" href="<?php echo URL; ?>public/css/bootstrap.min.css">
-	<link rel="stylesheet" href="<?php echo URL; ?>public/css/default.css" />
+	<link rel="stylesheet" href="<?php echo URL; ?>public/css/default.css"/>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin-ext" rel="stylesheet">
 
-<!--	<script type="text/javascript" src="--><?php //echo URL; ?><!--public/js/jquery.js"></script>-->
-<!--	<script type="text/javascript" src="--><?php //echo URL; ?><!--public/js/custom.js"></script>-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <script src="https://unpkg.com/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+
+
+
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
 
 
 </head>
@@ -77,9 +95,9 @@
     </header>
 
     <main>
-        <section class="reports">
+        <section>
 
-            <div class="container">
+            <div class="container mt-2 mb-2">
 
 
 

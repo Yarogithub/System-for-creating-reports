@@ -19,48 +19,86 @@ class Report extends Controllers
         $this->view->render('report/index');
     }
 
+    public function listJson()
+    {
+        $role = $_SESSION['role'];
+        if($role == 'admin')
+        {
+            $list = $this->view->reportsAdminList = $this->model->reportsAdminList();
+            echo json_encode(['data' => $list]);
+            die;
+        }
+        else
+        {
+            $list = $this->model->reportsEmployeeList($_SESSION['userid']);
+            echo json_encode(['data' => $list]);
+            die;
+        }
+    }
+
     function logout()
     {
         Session::destroy();
         header('location: ' . URL .  'login');
         exit;
     }
+
      public function create()
      {
         $report = new ReportEnt();
         $report ->setContent($_POST['content']);
         $report ->setUserid($_SESSION['userid']);
+
+         $reportValidator = new ReportValidator();
+         $errors = $reportValidator->validateReport($report);
+
+         if (!empty($errors))
+         {
+             header('HTTP/1.1 400 Bad Request');
+             echo json_encode(['errors' => $errors]);
+             die;
+         }
+
         $this->model->create($report);
-        header('location: ' . URL . 'report');
+        die;
      }
 
-     public function createSave()
-     {
-         $this->view->title = 'Report: Add';
-         $this->view->render('report/add');
-     }
 
     public function edit($reportId)
     {
-        $this->view->title = 'Report: Edit';
-        $this->view->report = $this->model->reportsSingleRecord($reportId);
-        $this->view->render('report/edit');
+        $report = new ReportEnt();
+        $report ->setContent($_POST['content']);
+        $report ->setUserid($_SESSION['userid']);
+        $report ->setReportid($reportId);
+
+        $reportValidator = new ReportValidator();
+        $errors = $reportValidator->validateReport($report);
+
+        if (!empty($errors))
+        {
+            header('HTTP/1.1 400 Bad Request');
+            echo json_encode(['errors' => $errors]);
+            die;
+        }
+
+        $this->model->edit($report);
+        die;
     }
 
-    public function editSave($reportId)
-    {
-        $reportEdit = new ReportEnt();
-        $reportEdit ->setContent($_POST['content']);
-        $reportEdit ->setUserid($_SESSION['userid']);
-        $reportEdit ->setReportid($reportId);
-        $this->model->editSave($reportEdit);
-        header('location: ' . URL . 'report');
-    }
+
 
     public function delete($reportId)
     {
         $this->model->delete($reportId);
-        header('location: ' . URL . 'report');
+        die;
     }
+
+
+//    public function listJsonAdmin()
+//    {
+//        $list = $this->view->reportsAdminList = $this->model->reportsAdminList();
+//        echo json_encode(['data' => $list]);
+//        die;
+//    }
 
 }

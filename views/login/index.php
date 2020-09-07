@@ -1,12 +1,3 @@
-<!--<h1>Login</h1>-->
-<!---->
-<!--<form action="login/run" method="post">-->
-<!---->
-<!--    <label>Login</label><input type="text" name="login" /><br />-->
-<!--    <label>Password</label><input type="password" name="password" /><br />-->
-<!--    <label></label><input type="submit" />-->
-<!--</form>-->
-
 <div class="d-flex justify-content-center h-100">
     <div class="card">
         <div class="card-header">
@@ -18,28 +9,93 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="login/run" method="post">
+            <form id="loginForm" action="login/run" method="post">
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                     </div>
                     <input type="text" class="form-control" name="login" placeholder="login">
+                    <div class="invalid-feedback" id="loginLogInError">
+                    </div>
 
                 </div>
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-key"></i></span>
                     </div>
-                    <input type="password" class="form-control" placeholder="password" name="password">
+                    <input type="password" name="password" class="form-control" placeholder="password">
+                    <div class="invalid-feedback" id="passwordLogInError">
+                    </div>
                 </div>
-<!--                <div class="row align-items-center remember">-->
-<!--                    <input type="checkbox">Remember Me-->
-<!--                </div>-->
+
                 <div class="form-group">
-                    <input type="submit" class="btn float-right login_btn">
-<!--                    <input type="submit" value="Login" />-->
+                    <input type="submit" id="loginSubmit" class="btn float-right login_btn">
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+
+<script>
+
+    $(document).on('click','#loginSubmit',function () {
+
+        var frm = $('#loginForm');
+
+
+        frm.submit(function (e) {
+
+            e.preventDefault();
+
+            var me = $(this);
+
+            if(me.data('requestRunning')){
+                return;
+            }
+
+            me.data('requestRunning',true);
+
+            $.ajax({
+                type: frm.attr('method'),
+                url: frm.attr('action'),
+                data: frm.serialize(),
+                success: function (data) {
+                    window.location.href = "<?php echo URL; ?>/index";
+                },
+                error: function (data) {
+
+                    console.log('error')
+                    me.data('requestRunning',false);
+
+                    var error = JSON.parse(data.responseText);
+                    var errors = error.errors;
+                    var loginError = errors.login;
+                    var passwordError = errors.password;
+
+                    console.log(passwordError);
+                    console.log(loginError);
+
+
+                    $.each(errors, function (index, value) {
+
+                        $('input[name="' + index + '"]').addClass("is-invalid");
+
+                        $('#' + index + "LogInError").html(value);
+                    })
+
+                    if (loginError === undefined)
+                    {
+                        $('input[name="login"]').removeClass("is-invalid");
+                    }
+
+                    if(passwordError===undefined){
+                        $('input[name="password"]').removeClass("is-invalid");
+                    }
+                },
+            });
+
+    });
+    });
+
+</script>

@@ -7,7 +7,7 @@ class Bootstrap {
 
 	private $_controllerPath = 'controllers/'; // Always include trailing slash
 	private $_modelPath = 'model/'; // Always include trailing slash
-	private $_errorFile = 'err.php';
+	private $_errorFile = 'Err.php';
 	private $_defaultFile = 'Index.php';
 
     /**
@@ -174,8 +174,7 @@ class Bootstrap {
         $this->_controller = new Err();
         $this->_controller->index();
         exit;
-
-		//return false;
+		return false;
 	}
 
 }

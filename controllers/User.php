@@ -14,6 +14,14 @@ class User extends Controllers
         $this->view->title = 'User';
         $this->view->userList = $this->model->userList();
         $this->view->render('user/index');
+        die;
+    }
+
+    public function listJsonUsers()
+    {
+        $list = $this->view->userList = $this->model->userList();
+        echo json_encode(['data' => $list]);
+        die;
     }
 
 
@@ -23,38 +31,49 @@ class User extends Controllers
         $users ->setLogin($_POST['login']);
         $users ->setPassword($_POST['password']);
         $users ->setRole($_POST['role']);
+
+        $userValidator = new UserValidator();
+        $errors = $userValidator->validateUser($users);
+
+        if (!empty($errors))
+        {
+            header('HTTP/1.1 400 Bad Request');
+            echo json_encode(['errors' => $errors]);
+            die;
+        }
+
         $this->model->create($users);
-        header('location: ' . URL . 'user');
+        die;
     }
 
-    public function createSave()
-    {
-        $this->view->title = 'User: Add';
-        $this->view->render('user/add');
-    }
+
 
     public function edit($userid)
-    {
-        $this->view->title = 'User: Edit';
-        $this->view->user = $this->model->userSingleList($userid);
-        $this->view->render('user/edit');
-    }
-
-    public function editSave($userid)
     {
         $userEdit = new Users();
         $userEdit->setUserId($userid);
         $userEdit ->setLogin($_POST['login']);
         $userEdit ->setPassword($_POST['password']);
         $userEdit ->setRole($_POST['role']);
-        $this->model->editSave($userEdit);
-        header('location: ' . URL . 'User');
+
+        $userValidator = new UserValidator();
+        $errors = $userValidator->validateUser($userEdit);
+
+        if (!empty($errors))
+        {
+            header('HTTP/1.1 400 Bad Request');
+            echo json_encode(['errors' => $errors]);
+            die;
+        }
+
+        $this->model->edit($userEdit);
+        die;
     }
 
     public function delete($userid)
     {
         $this->model->delete($userid);
-        header('location: ' . URL . 'user');
+        die;
     }
 
 }
