@@ -58,6 +58,64 @@ class Login extends Controllers
         Session::set('role', $user['role']);
         Session::set('loggedIn', true);
         Session::set('userid', $user['userid']);
+    }
 
+    public function forgotPassword()
+    {
+        $user = new Users();
+        $user ->setLogin($_POST['loginCheck']);
+        $user ->setToken(uniqid() . uniqid());
+
+
+        $emailValidator = new EmailValidator();
+        $errors = $emailValidator->validateEmail($user);
+
+
+        if (!empty($errors))
+        {
+            header('HTTP/1.1 400 Bad Request');
+            echo json_encode(['errors' => $errors]);
+            die;
+        }
+
+        $subject = 'Set New Password';
+        $body = 'http://localhost/reports/login/setNewPassword?token='.$user->getToken();
+
+
+        $mailer = new Mailer();
+        $mailer->mailerSend($_POST['loginCheck'],$subject,$body);
+
+        $this->model->forgotPassword($user);
+    }
+
+    public function setNewPassword()
+    {
+        if($_SERVER['REQUEST_METHOD'] == 'GET')
+        {
+            $this->view->render('user/setNewPassword');
+        }
+        else
+        {
+            $token = $_GET['token'];
+            $password = $_POST['setPassword'];
+            $confirmPassword = $_POST['confirmPassword'];
+
+            $user = new Users();
+            $user ->setPassword($password);
+            $user ->setConfirmPassword($confirmPassword);
+            $user ->setToken($token);
+
+            $passwordValidator = new PasswordValidator();
+            $errors = $passwordValidator->validateFirstPassword($user);
+
+            if (!empty($errors))
+            {
+                header('HTTP/1.1 400 Bad Request');
+                echo json_encode(['errors' => $errors]);
+                die;
+            }
+
+            $this->model->setNewPassword($user);
+        }
     }
 }

@@ -33,6 +33,39 @@
                 </div>
             </form>
         </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-center">
+                <a href="#" data-toggle="modal" data-target="#myForgotPasswordModal">Forgot your password?</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myForgotPasswordModal" class="modal fade">
+    <div class="modal-dialog modal-login">
+        <div class="modal-content">
+            <form id="forgotPasswordForm" action="login/forgotPassword" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title">Password: Forgot</h4>
+                    <button type="button" name="close" class="close closeButton" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                        <p >Please enter your email we will send you link and you will able to set a new password for your account</p>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" name="loginCheck" class="form-control"  placeholder="Email">
+                        <div class="invalid-feedback" id="loginCheckError">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <input type="submit" id="forgotPassword" class="btn btn-primary" value="Save">
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -95,7 +128,56 @@
                 },
             });
 
+        });
     });
+
+    $(document).on('click','#forgotPassword',function () {
+
+        var frm = $('#forgotPasswordForm');
+
+
+        frm.submit(function (e) {
+
+            e.preventDefault();
+
+            var me = $(this);
+
+            if(me.data('requestRunning')){
+                return;
+            }
+
+            me.data('requestRunning',true);
+
+            $.ajax({
+                type: frm.attr('method'),
+                url: frm.attr('action'),
+                data: frm.serialize(),
+                success: function (data) {
+                    $('#myForgotPasswordModal').modal('toggle');
+                },
+                error: function (data) {
+
+                    console.log('error')
+                    me.data('requestRunning',false);
+
+                    var error = JSON.parse(data.responseText);
+                    var errors = error.errors;
+                    var loginError = errors.loginCheck;
+                    $.each(errors, function (index, value) {
+
+                        $('input[name="' + index + '"]').addClass("is-invalid");
+
+                        $('#' + index + "Error").html(value);
+                    })
+
+                    if (loginError === undefined)
+                    {
+                        $('input[name="loginCheck"]').removeClass("is-invalid");
+                    }
+                },
+            });
+
+        });
     });
 
 </script>

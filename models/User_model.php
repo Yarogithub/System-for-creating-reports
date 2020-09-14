@@ -29,8 +29,37 @@ class User_model extends Model
             [
             'login'=>$data->getLogin(),
             'password'=>password_hash($data->getPassword(),PASSWORD_DEFAULT),
-            'role'=>$data->getRole()
+            'role'=>$data->getRole(),
+            'token'=>$data->getToken(),
             ]);
+    }
+
+    public function setFirstPassword(Users $data)
+    {
+        $this->db->update('user',
+            [
+                'password'=>password_hash($data->getPassword(),PASSWORD_DEFAULT),
+            ],
+            '`token` ="'.$data->getToken().'"' );
+
+    }
+
+    public function setNewPassword(Users $data)
+    {
+        $this->db->update('user',
+            [
+                'password'=>password_hash($data->getPassword(),PASSWORD_DEFAULT),
+            ],
+            '`token` ="'.$data->getToken().'"' );
+    }
+
+    public function forgotPassword(Users $data)
+    {
+        $this->db->update('user',
+            [
+                'token'=>$data->getToken(),
+            ],
+            '`login` ="'.$data->getLogin().'"' );
     }
 
 
@@ -44,6 +73,8 @@ class User_model extends Model
           ],
           "`userid` =" . $data->getUserId());
     }
+
+
 
     public function delete($userid)
     {

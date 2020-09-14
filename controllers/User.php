@@ -31,6 +31,7 @@ class User extends Controllers
         $users ->setLogin($_POST['login']);
         $users ->setPassword($_POST['password']);
         $users ->setRole($_POST['role']);
+        $users ->setToken(uniqid() . uniqid());
 
         $userValidator = new UserValidator();
         $errors = $userValidator->validateUser($users);
@@ -42,10 +43,49 @@ class User extends Controllers
             die;
         }
 
+        $subject = 'Set First Password';
+        $body = 'http://localhost/reports/user/setFirstPassword?token='.$users->getToken();
+
+
+        $mailer = new Mailer();
+        $mailer->mailerSend($_POST['login'],$subject,$body);
+
         $this->model->create($users);
         die;
     }
 
+    public function setFirstPassword()
+    {
+
+        if($_SERVER['REQUEST_METHOD'] == 'GET')
+        {
+            $this->view->render('user/setFirstPassword');
+        }
+        else
+        {
+            $token = $_GET['token'];
+            $password = $_POST['setPassword'];
+            $confirmPassword = $_POST['confirmPassword'];
+
+            $user = new Users();
+            $user ->setPassword($password);
+            $user ->setConfirmPassword($confirmPassword);
+            $user ->setToken($token);
+
+            $passwordValidator = new PasswordValidator();
+            $errors = $passwordValidator->validateFirstPassword($user);
+
+            if (!empty($errors))
+            {
+                header('HTTP/1.1 400 Bad Request');
+                echo json_encode(['errors' => $errors]);
+                die;
+            }
+
+            $this->model->setFirstPassword($user);
+        }
+
+    }
 
 
     public function edit($userid)
