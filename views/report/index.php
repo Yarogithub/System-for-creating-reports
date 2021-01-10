@@ -1,4 +1,4 @@
-<!--<input type="hidden" id="role" name="role" value="--><? //=$_SESSION['role'];?><!--">-->
+
 <div class="table-responsive">
     <div class="table-wrapper">
         <div class="table-title">
@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-        <table id="reportTable" class="table table-striped table-bordered">
+        <table id="reportTable" style="width: 100%" class="table table-striped table-bordered" >
 
             <thead>
             <tr>

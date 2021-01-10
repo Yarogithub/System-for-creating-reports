@@ -11,7 +11,6 @@ class User_model extends Model
     public function userList()
     {
         return $this->db->selectAll('SELECT userid, login, role FROM user');
-
     }
 
     public function userSingleList($userid)

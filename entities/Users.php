@@ -10,11 +10,17 @@ class Users
     protected $token;
     protected $confirmPassword;
 
+
     /**
      * @return mixed
      */
     public function getConfirmPassword()
     {
+        $usr1 = new User();
+        $usr2 = new User();
+
+        $usrSing = UserSing::getInstance();
+        $usrSing = UserSing::getInstance();
         return $this->confirmPassword;
     }
 

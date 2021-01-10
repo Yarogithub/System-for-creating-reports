@@ -97,8 +97,6 @@
                     window.location.href = "<?php echo URL; ?>/index";
                 },
                 error: function (data) {
-
-                    console.log('error')
                     me.data('requestRunning',false);
 
                     var error = JSON.parse(data.responseText);

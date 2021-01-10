@@ -215,7 +215,7 @@
                             $('select[name="' + index + '"]').addClass("is-invalid");
 
                             $('#' + index + "Error").html(value);
-                        })
+                        });
 
                         if (emailError === undefined)
                         {
@@ -332,7 +332,6 @@
         var id = tds[0].textContent;
 
         $('#deleteId').val(id);
-
 
     });
 

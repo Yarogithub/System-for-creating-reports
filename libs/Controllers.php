@@ -22,6 +22,9 @@ class Controllers
 
         $path = 'models/'.$name.'_model.php';
 
+//        print_r($path);
+//        die;
+
         if (file_exists($path)) {
             require 'models/'.$name.'_model.php';
 

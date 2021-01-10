@@ -8,9 +8,6 @@
     <meta http-equiv="X-Ua-Compatible" content="IE=edge">
 
 	<title><?=(isset($this->title)) ? $this->title : 'Report'; ?></title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 	<link rel="stylesheet" href="<?php echo URL; ?>public/css/default.css"/>
@@ -20,15 +17,16 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
     <script src="https://unpkg.com/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-
-
-
 
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
@@ -71,6 +69,18 @@
                         <li class="nav-item">
                             <a class="nav-link" href="<?php echo URL; ?>User">Users</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?php echo URL; ?>Division">Divisions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?php echo URL; ?>Department">Departments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?php echo URL; ?>Task">Tasks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?php echo URL; ?>Position">Positions</a>
+                        </li>
                         <?php endif; ?>
                         <li class="nav-item">
                             <a class="nav-link" href="<?php echo URL; ?>Report/logout">Logout</a>
@@ -95,7 +105,7 @@
     </header>
 
     <main>
-        <section>
+        <section class="section">
 
             <div class="container mt-2 mb-2">
 

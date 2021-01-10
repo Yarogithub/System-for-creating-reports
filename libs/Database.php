@@ -9,6 +9,18 @@ class Database extends PDO
 
         //parent::setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTIONS);
     }
+
+    public function placeholders($text, $count=0, $separator=","){
+        $result = array();
+        if($count > 0){
+            for($x=0; $x<$count; $x++){
+                $result[] = $text;
+            }
+        }
+
+        return implode($separator, $result);
+    }
+
     /**
      * selectAll
      * @param string $sql An SQL string
@@ -67,13 +79,34 @@ class Database extends PDO
 
 
         $sth->execute();
-
-
-//        echo '<pre>';
-//        print_r($test);
-//        print_r($sth);
-//        die;
     }
+
+    /**
+     * insertMultiple
+     * @param string $table A name of table to insert into
+     * @param array $data An associative array
+     * @param array $datafields An associative array
+     */
+    public function insertMultiple($table, $data,$datafields)
+    {
+        $insert_values = [];
+        foreach($data as $d){
+            $question_marks[] = '('  . $this->placeholders('?', sizeof($d)) . ')';
+            $insert_values = array_merge($insert_values, array_values($d));
+        }
+
+        $sql = "INSERT INTO $table (" . implode(",", $datafields ) . ") VALUES " .
+            implode(',', $question_marks);
+
+        $stmt = $this->prepare ($sql);
+        try {
+            $stmt->execute($insert_values);
+        } catch (PDOException $e){
+            echo $e->getMessage();
+        }
+    }
+
+
 
     /**
      * update

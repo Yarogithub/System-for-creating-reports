@@ -87,7 +87,7 @@ class Bootstrap {
      */
 	private function _loadDefaultController()
 	{
-		require $this->_controllerPath . $this->_defaultFile;
+		require dirname(__DIR__). '/' . $this->_controllerPath . $this->_defaultFile;
 		$this->_controller = new Index();
 		$this->_controller->index();
 
@@ -100,8 +100,7 @@ class Bootstrap {
      */
 	private function _loadExistingController()
 	{
-		$file = $this->_controllerPath . $this->_url[0] . '.php';
-
+		$file = dirname(__DIR__) . '/' . $this->_controllerPath . ucfirst($this->_url[0]) . '.php';
 		if (file_exists($file)) {
 			require $file;
 			$this->_controller = new $this->_url[0];

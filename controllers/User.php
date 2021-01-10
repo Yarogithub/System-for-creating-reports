@@ -14,7 +14,6 @@ class User extends Controllers
         $this->view->title = 'User';
         $this->view->userList = $this->model->userList();
         $this->view->render('user/index');
-        die;
     }
 
     public function listJsonUsers()
