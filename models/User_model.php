@@ -10,7 +10,7 @@ class User_model extends Model
 
     public function userList()
     {
-        return $this->db->selectAll('SELECT userid, login, role FROM user');
+        return $this->db->selectAll('SELECT userid, login, role, name, lastName, phoneNumber, postalCode, country, city, hourlyRate FROM user');
     }
 
     public function userSingleList($userid)
@@ -30,6 +30,15 @@ class User_model extends Model
             'password'=>password_hash($data->getPassword(),PASSWORD_DEFAULT),
             'role'=>$data->getRole(),
             'token'=>$data->getToken(),
+            'name'=>$data->getName(),
+            'lastName'=>$data->getLastName(),
+            'phoneNumber'=>$data->getPhoneNumber(),
+            'postalCode'=>$data->getPostalCode(),
+            'country'=>$data->getCountry(),
+            'city'=>$data->getCity(),
+            'hourlyRate'=>$data->getHourlyRate(),
+            'departmentid'=>$data->getDepartmentid(),
+            'positionid'=>$data->getPositionid()
             ]);
     }
 
@@ -68,7 +77,16 @@ class User_model extends Model
           [
               'login'=>$data->getLogin(),
               'password'=>password_hash($data->getPassword(),PASSWORD_DEFAULT),
-              'role'=>$data->getRole()
+              'role'=>$data->getRole(),
+              'name'=>$data->getName(),
+              'lastName'=>$data->getLastName(),
+              'phoneNumber'=>$data->getPhoneNumber(),
+              'postalCode'=>$data->getPostalCode(),
+              'country'=>$data->getCountry(),
+              'city'=>$data->getCity(),
+              'hourlyRate'=>$data->getHourlyRate(),
+              'departmentid'=>$data->getDepartmentid(),
+              'positionid'=>$data->getPositionid()
           ],
           "`userid` =" . $data->getUserId());
     }
@@ -77,18 +95,6 @@ class User_model extends Model
 
     public function delete($userid)
     {
-//        $sth = $this->db->prepare('SELECT role FROM user WHERE userid = :userid');
-//        $sth->execute(
-//            [
-//                ':userid' => $userid
-//            ]);
-//        $data = $sth->fetch();
-//        if ($data['role'] == 'admin')
-//        {
-//            return false;
-//        }
-
-
         $this->db->delete('user', "userid = $userid", 1);
     }
 
@@ -101,6 +107,40 @@ class User_model extends Model
         return $this->db->selectOne('SELECT * FROM user WHERE login = :login', [
             'login'=>$login,
         ]);
+
+    }
+
+    public function getDepartments()
+    {
+        return $this->db->selectAll('SELECT id, name FROM departments');
+    }
+
+    public function getPositions()
+    {
+        return $this->db->selectAll('SELECT id, name FROM positions');
+    }
+
+    public function getActiveDepartmentsPositions(Users $data)
+    {
+        $department = $this->db->selectAll("SELECT departments.id, departments.name FROM departments WHERE departments.id IN (SELECT user.departmentid FROM user WHERE userid = :userid)",
+            [
+                'userid'=>$data->getUserId()
+            ]);
+        $position = $this->db->selectAll("SELECT positions.id, positions.name FROM positions WHERE positions.id IN (SELECT user.positionid FROM user WHERE userid = :userid)",
+            [
+                'userid'=>$data->getUserId()
+            ]);
+
+        $user = $this->db->selectAll("SELECT name, lastName, phoneNumber, postalCode, country, city, hourlyRate FROM user WHERE userid=:userid ",
+            [
+                'userid'=>$data->getUserId()
+            ]);
+
+        return [
+            'department'=> $department,
+            'position'=> $position,
+            'user'=> $user,
+            ];
 
     }
 

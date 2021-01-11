@@ -13,6 +13,8 @@ class User extends Controllers
     {
         $this->view->title = 'User';
         $this->view->userList = $this->model->userList();
+        $this->view->departments = $this->model->getDepartments();
+        $this->view->positions = $this->model->getPositions();
         $this->view->render('user/index');
     }
 
@@ -30,6 +32,15 @@ class User extends Controllers
         $users ->setLogin($_POST['login']);
         $users ->setPassword($_POST['password']);
         $users ->setRole($_POST['role']);
+        $users ->setName($_POST['name']);
+        $users ->setCity($_POST['city']);
+        $users ->setLastName($_POST['lastName']);
+        $users ->setCountry($_POST['country']);
+        $users ->setHourlyRate($_POST['hourlyRate']);
+        $users ->setPhoneNumber($_POST['phoneNumber']);
+        $users ->setPostalCode($_POST['postalCode']);
+        $users ->setPositionid($_POST['positionId']);
+        $users ->setDepartmentid($_POST['departmentId']);
         $users ->setToken(uniqid() . uniqid());
 
         $userValidator = new UserValidator();
@@ -86,17 +97,36 @@ class User extends Controllers
 
     }
 
+    public function editJSON($userid)
+    {
+        $user = new Users();
+        $user->setUserId($userid);
+
+        $list = $this->view->getActiveDepartmentsPositions = $this->model->getActiveDepartmentsPositions($user);
+        echo json_encode(['data' => $list]);
+        die;
+    }
+
 
     public function edit($userid)
     {
-        $userEdit = new Users();
-        $userEdit->setUserId($userid);
-        $userEdit ->setLogin($_POST['login']);
-        $userEdit ->setPassword($_POST['password']);
-        $userEdit ->setRole($_POST['role']);
+        $users = new Users();
+        $users->setUserId($userid);
+        $users ->setLogin($_POST['login']);
+        $users ->setPassword($_POST['password']);
+        $users ->setRole($_POST['role']);
+        $users ->setName($_POST['name']);
+        $users ->setCity($_POST['city']);
+        $users ->setLastName($_POST['lastName']);
+        $users ->setCountry($_POST['country']);
+        $users ->setHourlyRate($_POST['hourlyRate']);
+        $users ->setPhoneNumber($_POST['phoneNumber']);
+        $users ->setPostalCode($_POST['postalCode']);
+        $users ->setPositionid($_POST['positionId']);
+        $users ->setDepartmentid($_POST['departmentId']);
 
         $userValidator = new UserValidator();
-        $errors = $userValidator->validateUser($userEdit);
+        $errors = $userValidator->validateUser($users);
 
         if (!empty($errors))
         {
@@ -105,7 +135,7 @@ class User extends Controllers
             die;
         }
 
-        $this->model->edit($userEdit);
+        $this->model->edit($users);
         die;
     }
 

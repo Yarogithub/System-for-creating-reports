@@ -10,6 +10,13 @@ class UserValidator
         $this->validateEmail($user->getLogin());
         $this->validatePassword($user->getPassword());
         $this->validateRole($user->getRole());
+        $this->validateCity($user->getCity());
+        $this->validateCountry($user->getCountry());
+        $this->validateHourlyRate($user->getHourlyRate());
+        $this->validateLastName($user->getLastName());
+        $this->validateName($user->getName());
+        $this->validatePostalCode($user->getPostalCode());
+        $this->validatePhoneNumber($user->getPhoneNumber());
 
         return $this->errors;
     }
@@ -63,4 +70,59 @@ class UserValidator
         }
     }
 
+    protected function validateName($name)
+    {
+        if(empty($name)) {
+
+            $this->errors['name'] = "You have to fill this field";
+        }
+    }
+
+    protected function validateLastName($lastName)
+    {
+        if(empty($lastName)) {
+
+            $this->errors['lastName'] = "You have to fill this field";
+        }
+    }
+
+    protected function validatePhoneNumber($phoneNumber)
+    {
+        if(empty($phoneNumber)) {
+
+            $this->errors['phoneNumber'] = "You have to fill this field";
+        }
+    }
+
+    protected function validatePostalCode($postalCode)
+    {
+        if(empty($postalCode)) {
+
+            $this->errors['postalCode'] = "You have to fill this field";
+        }
+    }
+
+    protected function validateCountry($country)
+    {
+        if(empty($country)) {
+
+            $this->errors['country'] = "You have to fill this field";
+        }
+    }
+
+    protected function validateCity($city)
+    {
+        if(empty($city)) {
+
+            $this->errors['city'] = "You have to fill this field";
+        }
+    }
+
+    protected function validateHourlyRate($hourlyRate)
+    {
+        if(empty($hourlyRate)) {
+
+            $this->errors['hourlyRate'] = "You have to fill this field";
+        }
+    }
 }

@@ -113,7 +113,7 @@
                         $('input[name="' + index + '"]').addClass("is-invalid");
 
                         $('#' + index + "LogInError").html(value);
-                    })
+                    });
 
                     if (loginError === undefined)
                     {

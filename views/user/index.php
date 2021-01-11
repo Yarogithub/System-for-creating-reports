@@ -1,4 +1,4 @@
-<div class="table-responsive">
+<div class="table-responsive w-100">
     <div class="table-wrapper">
         <div class="table-title">
             <div class="row">
@@ -12,17 +12,32 @@
 
             <thead>
             <tr>
-                <th>UserId</th>
-                <th>Email/login</th>
-                <th>Role</th>
+                <th>Id</th>
+                <th>Adres mailowy</th>
+                <th>Rola</th>
+                <th>Imie</th>
+                <th>Nazwisko</th>
+                <th>Numer telefonu</th>
+                <th>Kod pocztowy</th>
+                <th>Kraj</th>
+                <th>Miejscowość</th>
+                <th>Stawka godzinowa</th>
                 <th>Action</th>
             </tr>
             </thead>
 
             <tbody>
-            <td></td>
-            <td></td>
-            <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tbody>
 
         </table>
@@ -32,35 +47,100 @@
 <div id="myUserModal" class="modal fade">
     <div class="modal-dialog modal-login">
         <div class="modal-content">
-            <form class="needs-validaion" id="userAddForm" action="<?php echo URL; ?>user/create" method="post">
+            <form class="needs-validaion" id="userAddForm" action="<?php echo URL; ?>User/create" method="post">
                 <div class="modal-header">
-                    <h4 class="modal-title">User: Add</h4>
+                    <h4 class="modal-title">Dodawanie: Użytkownika</h4>
                     <button type="button" name="close" class="close closeButton" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Email/login</label>
-                        <input type="text" id="email" name="login" class="form-control"  placeholder="Email">
+                        <label>Adres mailowy</label>
+                        <input type="text" name="login" class="form-control"  placeholder="Adres mailowy">
                         <div class="invalid-feedback" id="loginError">
                         </div>
                     </div>
                     <div class="form-group">
-
-                        <label>Password</label>
-                        <input type="password" id="addPassword" name="password" class="form-control">
+                        <label>Hasło</label>
+                        <input type="password" name="password" class="form-control" placeholder="Hasło">
                         <div class="invalid-feedback" id="passwordError">
                         </div>
 
                     </div>
                     <div class="form-group">
-                        <label for="userRole">Role</label>
+                        <label for="userRole">Rola</label>
                         <select class="form-control custom-select" name="role" id="userRole">
                             <option value="admin" name="admin">admin</option>
                             <option value="employee" name="employee">employee</option>
                         </select>
                         <div class="invalid-feedback" id="roleError">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Imie</label>
+                        <input type="text" name="name" class="form-control"  placeholder="Imie">
+                        <div class="invalid-feedback" id="nameError">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Nazwisko</label>
+                        <input type="text" name="lastName" class="form-control"  placeholder="Nazwisko">
+                        <div class="invalid-feedback" id="lastNameError">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Numer telefonu</label>
+                        <input type="text" name="phoneNumber" class="form-control"  placeholder="Numer telefonu">
+                        <div class="invalid-feedback" id="phoneNumberError">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Kod pocztowy</label>
+                        <input type="text" name="postalCode" class="form-control"  placeholder="Kod pocztowy">
+                        <div class="invalid-feedback" id="postalCodeError">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Kraj</label>
+                        <input type="text" name="country" class="form-control"  placeholder="Kraj">
+                        <div class="invalid-feedback" id="countryError">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Miejscowość</label>
+                        <input type="text"  name="city" class="form-control"  placeholder="Miejscowość">
+                        <div class="invalid-feedback" id="cityError">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Stawka godzinowa</label>
+                        <input type="text" id="hourlyRate" name="hourlyRate" class="form-control"  placeholder="Stawka godzinowa">
+                        <div class="invalid-feedback" id="hourlyRateError">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Dział</label>
+                        <select class="form-control" name="departmentId" >
+                            <?php
+                            $departments = $this->departments;
+                            foreach ($departments as $value): ?>
+                                <option value="<?= $value['id']; ?>"><?= $value['name']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <div class="invalid-feedback" id="divisionIdEditError">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Stanowisko</label>
+                        <select class="form-control" name="positionId" >
+                            <?php
+                            $positions = $this->positions;
+                            foreach ($positions as $value): ?>
+                                <option value="<?= $value['id']; ?>"><?= $value['name']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <div class="invalid-feedback" id="divisionIdEditError">
                         </div>
                     </div>
                 </div>
@@ -76,7 +156,7 @@
 <div id="myUserEditModal" class="modal fade">
     <div class="modal-dialog modal-login">
         <div class="modal-content">
-            <form action="" method="post">
+            <form id="userEdit" action="" method="post">
                 <div class="modal-header">
                     <h4 class="modal-title">User: Edit</h4>
                     <button type="button" class="close closeButton" data-dismiss="modal" aria-label="Close">
@@ -86,31 +166,96 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <input type="hidden" id="id">
-                        <label>Email/login</label>
-                        <input type="text" name="login" id="loginEdit" class="form-control">
-                        <div class="invalid-feedback" id="loginEditError">
+                        <label>Adres mailowy</label>
+                        <input type="text" id="email" name="login" class="form-control"  placeholder="Adres mailowy">
+                        <div class="invalid-feedback" id="loginError">
                         </div>
                     </div>
                     <div class="form-group">
-
-                        <label>Password</label>
-                        <input type="password" name="password"  class="form-control" id="password">
-                        <div class="invalid-feedback" id="passwordEditError">
+                        <label>Hasło</label>
+                        <input type="password" id="addPassword" name="password" class="form-control" placeholder="Hasło">
+                        <div class="invalid-feedback" id="passwordError">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="userRoleEdit">Role</label>
-                        <select class="form-control setRole" id="userRoleEdit" name="role" >
+                        <label>Rola</label>
+                        <select class="form-control setRole" name="role">
                             <option value="admin" name="admin">admin</option>
                             <option value="employee" name="employee">employee</option>
                         </select>
-                        <div class="invalid-feedback" id="roleEditError">
+                        <div class="invalid-feedback" id="roleError">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Imie</label>
+                        <input type="text" id="name" name="name" class="form-control"  placeholder="Imie">
+                        <div class="invalid-feedback" id="nameError">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Nazwisko</label>
+                        <input type="text" id="lastName" name="lastName" class="form-control"  placeholder="Nazwisko">
+                        <div class="invalid-feedback" id="lastNameError">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Numer telefonu</label>
+                        <input type="text" id="phoneNumber" name="phoneNumber" class="form-control"  placeholder="Numer telefonu">
+                        <div class="invalid-feedback" id="phoneNumberError">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Kod pocztowy</label>
+                        <input type="text" id="postalCode" name="postalCode" class="form-control"  placeholder="Kod pocztowy">
+                        <div class="invalid-feedback" id="postalCodeError">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Kraj</label>
+                        <input type="text" id="country" name="country" class="form-control"  placeholder="Kraj">
+                        <div class="invalid-feedback" id="countryError">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Miejscowość</label>
+                        <input type="text" id="city" name="city" class="form-control"  placeholder="Miejscowość">
+                        <div class="invalid-feedback" id="cityError">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Stawka godzinowa</label>
+                        <input type="text" name="hourlyRate" class="form-control"  placeholder="Stawka godzinowa">
+                        <div class="invalid-feedback" id="hourlyRateError">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="departmentsId">Dział</label>
+                        <select class="form-control setDepartments" name="departmentId" >
+                            <?php
+                            $departments = $this->departments;
+                            foreach ($departments as $value): ?>
+                                <option value="<?= $value['id']; ?>"><?= $value['name']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <div class="invalid-feedback" id="divisionIdEditError">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="departmentsId">Stanowisko</label>
+                        <select class="form-control setPosition" name="positionId" >
+                            <?php
+                            $positions = $this->positions;
+                            foreach ($positions as $value): ?>
+                                <option value="<?= $value['id']; ?>"><?= $value['name']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <div class="invalid-feedback" id="divisionIdEditError">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <input type="submit" class="btn btn-primary" id="userEdit" value="Save">
+                    <input type="submit" class="btn btn-primary" value="Save">
                 </div>
                 </div>
             </form>
@@ -121,7 +266,7 @@
 <div id="myUserDeleteModal" class="modal fade">
     <div class="modal-dialog modal-login">
         <div class="modal-content">
-            <form action="" method="post">
+            <form id="userDelete" action="" method="post">
                 <div class="modal-header">
                     <h4 class="modal-title">User: Delete</h4>
                     <button type="button" class="close closeButton" data-dismiss="modal" aria-label="Close">
@@ -135,7 +280,7 @@
                     </div>
                 <div class="modal-footer justify-content-between">
                     <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <input type="submit" class="btn btn-danger" id="userDelete" value="Delete">
+                    <input type="submit" class="btn btn-danger"  value="Delete">
                 </div>
             </form>
         </div>
@@ -155,10 +300,16 @@
                     {"data": "userid"},
                     {"data": "login"},
                     {"data": "role"},
+                    {"data": "name"},
+                    {"data": "lastName"},
+                    {"data": "phoneNumber"},
+                    {"data": "postalCode"},
+                    {"data": "country"},
+                    {"data": "city"},
+                    {"data": "hourlyRate"},
                     {
                         "data": '',
-                        "defaultContent": "<a class=\"add\" title=\"Add\" data-toggle=\"tooltip\"><i class=\"material-icons\">&#xE03B;</i></a>\n" +
-                            "<a href=\"#\" class=\"edit\" title=\"Edit\" data-toggle=\"modal\" data-target=\"#myUserEditModal\" id=\"Editbutton\"><i class=\"material-icons\">&#xE254;</i></a>\n" +
+                        "defaultContent": "<a href=\"#\" class=\"edit\" title=\"Edit\" data-toggle=\"modal\" data-target=\"#myUserEditModal\" id=\"Editbutton\"><i class=\"material-icons\">&#xE254;</i></a>\n" +
                             "<a class=\"delete\" title=\"Delete\" data-toggle=\"modal\" data-target=\"#myUserDeleteModal\"><i class=\"material-icons\">&#xE872;</i></a>"
                     }
                 ]
@@ -256,41 +407,63 @@
 
 
         $('#id').val(id);
-        $('#loginEdit').val(login);
+        $('input[name="login"]').val(login);
         $('.setRole').val(role).change();
+
+        var getID = $('#id').val();
+
+        $(".setPosition option:selected").prop("selected",false);
+        $(".setDepartments option:selected").prop("selected",false);
+
+
+        $.ajax({
+            type: 'POST',
+            url: "<?php echo URL; ?>User/editJSON/" + getID,
+            data: '',
+            success: function (data) {
+
+                var Data = JSON.parse(data);
+                var departments = Data.data.department;
+                var positions = Data.data.position;
+                var users = Data.data.user[0];
+                $.each(departments, function (index, value) {
+                    $(".setDepartments option[value='" + value.id + "']").prop("selected", true);
+                });
+
+                $.each(positions, function (index, value) {
+                    $(".setPosition option[value='" + value.id + "']").prop("selected", true);
+                });
+
+                $.each(users, function (index, value) {
+                    $('input[name="' + index + '"]').val(value);
+                });
+
+
+            },
+            error: function (data) {
+
+            },
+        });
 
     });
 
-    $(document).on('click', '#userEdit', function (e) {
+    $(document).on('submit', '#userEdit', function (e) {
 
-        var login = $('input#loginEdit').val();
+        e.preventDefault();
 
-        var id = $('input#id').val();
+        var id = $('#id').val();
 
-        var password = $('input#password').val();
-
-        var role = $('select.setRole').val();
-
-
-             e.preventDefault();
-
+        var form = $(this);
 
             $.ajax({
                 type: 'POST',
-                url: "<?php echo URL; ?>user/edit/" + id,
-                data: {
-                    'login': login,
-                    'password': password,
-                    'role': role
-                },
+                url: "<?php echo URL; ?>User/edit/" + id,
+                data: form.serialize(),
                 success: function (data) {
                     $('#myUserEditModal').modal('toggle');
                     $('#userTable').DataTable().ajax.reload();
                 },
                 error: function (data) {
-
-                    // me.data('requestRunning',false);
-
 
                     var error = JSON.parse(data.responseText);
                     var errors = error.errors;
@@ -304,7 +477,7 @@
                         $('select[name="' + index + '"]').addClass("is-invalid");
 
                         $('#' + index + "EditError").html(value);
-                    })
+                    });
 
                     if (emailError === undefined)
                     {
@@ -335,23 +508,16 @@
 
     });
 
-    $(document).on('click', '#userDelete',
-        function () {
+    $(document).on('submit', '#userDelete',
+        function (e) {
 
-            var frm = $('#myUserDeleteModal');
+            e.preventDefault();
 
-
-            var id = $('input#deleteId').val();
-
-
-            frm.submit(function (e) {
-
-                e.preventDefault();
-
+            var id = $('#deleteId').val();
 
                 $.ajax({
                     type: 'POST',
-                    url: "<?php echo URL; ?>user/delete/" + id,
+                    url: "<?php echo URL; ?>User/delete/" + id,
                     data: '',
                     success: function (data) {
                         $('#myUserDeleteModal').modal('toggle');
@@ -366,7 +532,6 @@
 
             });
 
-        });
 
 
 

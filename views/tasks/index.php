@@ -83,7 +83,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="departmentsId">Filar</label>
+                        <label for="departmentsId">Dział</label>
                         <select class="form-control setDepartments"  multiple="multiple"  name="departmentsId[]" >
                             <?php
                             $departments = $this->departments;
