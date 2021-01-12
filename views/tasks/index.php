@@ -124,6 +124,7 @@
                         <button class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
                         <input type="submit" class="btn btn-danger" value="Usuń">
                     </div>
+                </div>
             </form>
         </div>
     </div>

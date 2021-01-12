@@ -18,6 +18,11 @@ body{
 	margin-bottom: 50px;
 }
 
+.modal-backdrop.show
+{
+	opacity: 0!important;
+}
+
 
 footer
 {

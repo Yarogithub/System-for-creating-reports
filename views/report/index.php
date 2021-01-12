@@ -25,9 +25,11 @@
                     <th>Action</th>
 
                 <?php else: ?>
-                    <th>ReportId</th>
-                    <th>Content</th>
-                    <th>CreatedAt</th>
+                    <th>ID</th>
+                    <th>Ukończone zadania</th>
+                    <th>Liczba godzin</th>
+                    <th>Data utworzenia</th>
+                    <th>Data edycji</th>
                     <th>Action</th>
                 <?php endif; ?>
 
@@ -44,30 +46,62 @@
 </div>
 
 <div id="myModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <button type="button" class="close closeButton" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <div class="modal-header">
-                <h1 class="text-dark">Report: Add</h1>
-            </div>
-            <div class="modal-body">
-                <form id="contactForm1" method="post" action="<?php echo URL; ?>report/create">
-                    <div class="form-group">
-                        <label class="text-white" for="Report">Report</label>
-                        <textarea class="form-control" name="content" rows="8"></textarea>
-                        <div class="invalid-feedback" id="contentError">
+        <div class="modal-dialog modal-login">
+            <div class="modal-content" style="width: 150%!important;">
+                <form id="taskDeleteForm" action="" method="post">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Dodawanie: Raportu</h4>
+                        <button type="button" class="close closeButton" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Godziny pracy</label>
+                            <input type="text" name="numberOfHours" class="form-control daterange"  placeholder="Nazwa">
+                            <div class="invalid-feedback" id="EditError">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Wykonane zadania</label>
+                            <table id="itemsTable" class="table table-bordered">
+                                <thead class="thead-dark">
+                                <tr style="background-color: #1a4d80;color: white;">
+                                    <th scope="col">#</th>
+                                    <th scope="col">Czas zadania</th>
+                                    <th scope="col">Zadanie</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody id="append">
+                                <tr>
+                                    <td>1</td>
+                                    <td class="valuesInputWidth">
+                                        <input type="text" class="form-control daterange" name="completedTasks[0][time]">
+                                        <div class="invalid-feedback" id="items0irpfPercentageError">
+                                        </div>
+                                    </td>
+                                    <td class="valuesInputWidth">
+                                        <select class="form-control" name="completedTasks[0][task]" >
+                                            <?php
+                                            $tasks = $this->tasks;
+                                            foreach ($tasks as $value): ?>
+                                                <option value="<?= $value['id']; ?>"><?= $value['name']; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </td>
+                                    <td><button type="button"  class="btn btn-danger deleteItem">Delete</button></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <input type="button" class="btn btn-info addItem" value="Dodaj">
                         </div>
                     </div>
-                    <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button name="submit" type="submit" class="btn btn-primary">Save</button>
                 </form>
             </div>
         </div>
     </div>
 
-</div>
 
 
 <div id="myEditModal" class="modal fade" role="dialog">
@@ -132,18 +166,20 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        var role = '<?php echo $_SESSION['role'];?>'
+        var role = '<?php echo $_SESSION['role'];?>';
         var columns = [{"data": "reportid"},
-                       {"data": "content"},
+                       {"data": "completedTasks"},
+                       {"data": "numberOfHours"},
 
         ];
         if (role === 'admin') {
-            columns.push({"data": "userid"})
-            columns.push({"data": "login"})
+            columns.push({"data": "userid"});
+            columns.push({"data": "login"});
         }
         columns = [...columns,
             ...[
                 {"data": "createdAt"},
+                {"data": "updatedAt"},
                 {
                     "data": '',
                     "defaultContent": "<a class=\"add\" title=\"Add\" data-toggle=\"tooltip\"><i class=\"material-icons\">&#xE03B;</i></a>\n" +
@@ -151,13 +187,41 @@
                         "                        <a class=\"delete\" title=\"Delete\" data-toggle=\"modal\" data-target=\"#myDeleteModal\"><i class=\"material-icons\">&#xE872;</i></a>"
                 }]];
 
-        $(".table").DataTable({
-            ajax: '<?php echo URL; ?>report/listJson',
+        $("#reportTable").DataTable({
+            ajax: '<?php echo URL; ?>Report/listJson',
 
             columns: columns
         });
 
 
+    });
+
+    // $.fn.myfunction = function () {
+    //     $('.daterange').daterangepicker({
+    //         timePicker : true,
+    //         timePicker24Hour : true,
+    //         timePickerIncrement : 1,
+    //         timePickerSeconds : false,
+    //         locale : {
+    //             format : 'HH:mm'
+    //         }
+    //     }).on('show.daterangepicker', function(ev, picker) {
+    //         picker.container.find(".calendar-table").hide();
+    //     });
+    // };
+
+    $(document).ready(function () {
+        $('.daterange').daterangepicker({
+            timePicker : true,
+            timePicker24Hour : true,
+            timePickerIncrement : 1,
+            timePickerSeconds : false,
+            locale : {
+                format : 'HH:mm'
+            }
+        }).on('show.daterangepicker', function(ev, picker) {
+            picker.container.find(".calendar-table").hide();
+        });
     });
 
 
@@ -188,7 +252,7 @@
                         $('textarea[name="' + index + '"]').addClass("is-invalid");
 
                         $('#' + index + "Error").html(value);
-                    })
+                    });
 
                     if(contentError === undefined)
                     {
@@ -196,6 +260,48 @@
                     }
                 },
             });
+        });
+    });
+
+    $(document).on('click', '.addItem', function () {
+        let td = $('#itemsTable tbody tr:last').children("td:first").html();
+        if(td === undefined)
+        {
+            td = '0';
+        }
+        let item = parseInt(td);
+
+        let tr = `<tr>
+                    <td>${item + 1}</td>
+                    <td class="valuesInputWidth">
+                    <input type="text" class="form-control daterange" name="completedTasks[${item}][time]">
+                    <div class="invalid-feedback" id="items0irpfPercentageError">
+                    </div>
+                    </td>
+                    <td class="valuesInputWidth">
+                    <select class="form-control" name="completedTasks[${item}][task]" >
+                        <?php
+                        $tasks = $this->tasks;
+                             foreach ($tasks as $value): ?>
+                            <option value="<?= $value['id']; ?>"><?= $value['name']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    </td>
+                    <td><button type="button"  class="btn btn-danger deleteItem">Delete</button></td>
+                  </tr>`;
+
+        let tableBody = $("#itemsTable tbody");
+        tableBody.append(tr);
+        $('.daterange').daterangepicker({
+            timePicker : true,
+            timePicker24Hour : true,
+            timePickerIncrement : 1,
+            timePickerSeconds : false,
+            locale : {
+                format : 'HH:mm'
+            }
+        }).on('show.daterangepicker', function(ev, picker) {
+            picker.container.find(".calendar-table").hide();
         });
     });
 

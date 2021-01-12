@@ -10,7 +10,7 @@ class Report_model extends Model
 
     public function reportsEmployeeList($userid)
     {
-        return $this->db->selectAll('SELECT r.reportid, r.content,r.createdAt FROM report as r,user as u where u.userid=r.userid and u.userid = :userid',
+        return $this->db->selectAll('SELECT r.reportid, r.completedTasks, r.numberOfHours, r.createdAt, r.updatedAt FROM report as r,user as u where u.userid=r.userid and u.userid = :userid',
             [
                 ':userid' => $userid
             ]);
@@ -20,6 +20,14 @@ class Report_model extends Model
     {
         return $this->db->selectAll('SELECT * FROM report as r,user as u where u.userid=r.userid ');
 
+    }
+
+    public function getTasks($userid)
+    {
+        return $this->db->selectAll('SELECT tasks.id, tasks.name FROM tasks WHERE tasks.id IN (SELECT departments_tasks.taskid FROM departments_tasks WHERE departments_tasks.departmentid IN (SELECT user.departmentid FROM user WHERE user.userid=:userid))',
+            [
+                'userid' => $userid
+            ]);
     }
 
     public function reportsSingleRecord($reportid)

@@ -3,10 +3,60 @@
 
 class ReportEnt
 {
-    protected $content;
+    protected $completedTasks;
+    protected $numberOfHours;
+    protected $updatedAt;
     protected $createdAt;
     protected $userid;
     protected $reportid;
+
+    /**
+     * @return mixed
+     */
+    public function getCompletedTasks()
+    {
+        return $this->completedTasks;
+    }
+
+    /**
+     * @param mixed $completedTasks
+     */
+    public function setCompletedTasks($completedTasks)
+    {
+        $this->completedTasks = $completedTasks;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNumberOfHours()
+    {
+        return $this->numberOfHours;
+    }
+
+    /**
+     * @param mixed $numberOfHours
+     */
+    public function setNumberOfHours($numberOfHours)
+    {
+        $this->numberOfHours = $numberOfHours;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param mixed $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    }
 
     /**
      * @return mixed
