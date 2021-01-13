@@ -26,7 +26,7 @@
 
                 <?php else: ?>
                     <th>ID</th>
-                    <th>Ukończone zadania</th>
+                    <th>Zadaniar</th>
                     <th>Liczba godzin</th>
                     <th>Data utworzenia</th>
                     <th>Data edycji</th>

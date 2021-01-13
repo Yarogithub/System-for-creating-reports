@@ -10,7 +10,7 @@ class Report_model extends Model
 
     public function reportsEmployeeList($userid)
     {
-        return $this->db->selectAll('SELECT r.reportid, r.completedTasks, r.numberOfHours, r.createdAt, r.updatedAt FROM report as r,user as u where u.userid=r.userid and u.userid = :userid',
+        return $this->db->selectAll('SELECT r.reportid, r.numberOfHours, r.createdAt, r.updatedAt FROM report as r,user as u where u.userid=r.userid and u.userid = :userid',
             [
                 ':userid' => $userid
             ]);
