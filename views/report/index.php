@@ -48,7 +48,7 @@
 <div id="myModal" class="modal fade">
         <div class="modal-dialog modal-login">
             <div class="modal-content" style="width: 150%!important;">
-                <form id="taskDeleteForm" action="" method="post">
+                <form id="addReport" action="<?php echo URL; ?>Report/create" method="POST">
                     <div class="modal-header">
                         <h4 class="modal-title">Dodawanie: Raportu</h4>
                         <button type="button" class="close closeButton" data-dismiss="modal" aria-label="Close">
@@ -63,7 +63,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Wykonane zadania</label>
+                            <label for="itemsTable">Wykonane zadania</label>
                             <table id="itemsTable" class="table table-bordered">
                                 <thead class="thead-dark">
                                 <tr style="background-color: #1a4d80;color: white;">
@@ -94,8 +94,11 @@
                                 </tr>
                                 </tbody>
                             </table>
-                            <input type="button" class="btn btn-info addItem" value="Dodaj">
+                            <input type="button" class="btn btn-info addItem float-left mb-1" value="+">
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Dodaj">
                     </div>
                 </form>
             </div>
@@ -225,22 +228,18 @@
     });
 
 
-    $(document).ready(function () {
-
-        var frm = $('#contactForm1');
-
-        frm.submit(function (e) {
-
+    $(document).on('submit', '#addReport', function () {
             e.preventDefault();
 
+            var form = $(this);
+
             $.ajax({
-                type: frm.attr('method'),
-                url: frm.attr('action'),
-                data: frm.serialize(),
+                type: form.attr('method'),
+                url: form.attr('action'),
+                data: form.serialize(),
                 success: function (data) {
                     $('#myModal').modal('toggle');
                     $('#reportTable').DataTable().ajax.reload();
-                    $('textarea').attr('name', 'content').val('');
                 },
                 error: function (data) {
                     var error = JSON.parse(data.responseText);
@@ -261,7 +260,6 @@
                 },
             });
         });
-    });
 
     $(document).on('click', '.addItem', function () {
         let td = $('#itemsTable tbody tr:last').children("td:first").html();
@@ -304,6 +302,11 @@
             picker.container.find(".calendar-table").hide();
         });
     });
+
+    $(document).on('click','.deleteItem',function () {
+        $(this).closest("tr").remove();
+    });
+
 
 
     $(document).on('click', '.edit', function () {

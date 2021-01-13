@@ -41,10 +41,11 @@ class Report_model extends Model
 
     public function create(ReportEnt $report)
     {
+
         $this->db->insert('report',
         [
-           'userid'=> $report->getUserid(),
-           'content'=> $report->getContent(),
+            'userid'=> $report->getUserid(),
+            'content'=> $report->getContent(),
             'createdAt'=>$report->getCreatedAt()->format('Y-m-d H:i:s')
         ]);
 

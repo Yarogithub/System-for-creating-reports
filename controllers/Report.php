@@ -48,18 +48,19 @@ class Report extends Controllers
      public function create()
      {
         $report = new ReportEnt();
-        $report ->setContent($_POST['content']);
+        $report ->setCompletedTasks($_POST['completedTasks']);
         $report ->setUserid($_SESSION['userid']);
+        $report ->setNumberOfHours($_SESSION['userid']);
 
-         $reportValidator = new ReportValidator();
-         $errors = $reportValidator->validateReport($report);
-
-         if (!empty($errors))
-         {
-             header('HTTP/1.1 400 Bad Request');
-             echo json_encode(['errors' => $errors]);
-             die;
-         }
+//         $reportValidator = new ReportValidator();
+//         $errors = $reportValidator->validateReport($report);
+//
+//         if (!empty($errors))
+//         {
+//             header('HTTP/1.1 400 Bad Request');
+//             echo json_encode(['errors' => $errors]);
+//             die;
+//         }
 
         $this->model->create($report);
         die;

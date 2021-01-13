@@ -96,15 +96,6 @@ class ReportEnt
         $this->userid = $userid;
     }
 
-
-    /**
-     * @return mixed
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
     /**
      * @return mixed
      */
@@ -119,13 +110,5 @@ class ReportEnt
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @param mixed $content
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
     }
 }
