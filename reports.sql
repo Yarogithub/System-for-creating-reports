@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Czas generowania: 13 Sty 2021, 17:51
+-- Czas generowania: 14 Sty 2021, 18:43
 -- Wersja serwera: 10.4.17-MariaDB
 -- Wersja PHP: 8.0.0
 
@@ -33,6 +33,17 @@ CREATE TABLE `dailyTasks` (
   `timeForTask` text COLLATE utf8_polish_ci NOT NULL,
   `name` text COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `dailyTasks`
+--
+
+INSERT INTO `dailyTasks` (`id`, `reportid`, `timeForTask`, `name`) VALUES
+(1, 1, '2', 'testowy5'),
+(2, 1, '6', 'testowy2'),
+(6, 3, '4', 'testowy5'),
+(7, 3, '2', 'testowy4'),
+(8, 3, '2', 'testowy3');
 
 -- --------------------------------------------------------
 
@@ -87,7 +98,7 @@ INSERT INTO `departments_tasks` (`id`, `taskid`, `departmentid`) VALUES
 
 CREATE TABLE `divisions` (
   `id` int(11) NOT NULL,
-  `name` varchar(25) COLLATE utf8_polish_ci NOT NULL
+  `name` varchar(255) COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
@@ -134,8 +145,17 @@ CREATE TABLE `report` (
   `userid` int(11) DEFAULT NULL,
   `numberOfHours` int(11) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL DEFAULT current_timestamp()
+  `updatedAt` datetime NOT NULL DEFAULT current_timestamp(),
+  `reportDate` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `report`
+--
+
+INSERT INTO `report` (`reportid`, `userid`, `numberOfHours`, `createdAt`, `updatedAt`, `reportDate`) VALUES
+(1, 4, 8, '2021-01-14 15:16:00', '2021-01-14 15:16:00', '2021-01-14'),
+(3, 4, 8, '2021-01-14 15:21:53', '2021-01-14 15:21:53', '2021-01-15');
 
 -- --------------------------------------------------------
 
@@ -256,7 +276,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT dla tabeli `dailyTasks`
 --
 ALTER TABLE `dailyTasks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT dla tabeli `departments`
@@ -286,7 +306,7 @@ ALTER TABLE `positions`
 -- AUTO_INCREMENT dla tabeli `report`
 --
 ALTER TABLE `report`
-  MODIFY `reportid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `reportid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT dla tabeli `tasks`
