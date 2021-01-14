@@ -14,12 +14,29 @@ class Report extends Controllers
 
         $this->view->title = 'Daily reports';
         $this->view->reportsAdminList = $this->model->reportsAdminList();
-        $this->view->tasks = $this->model->getTasks($_SESSION['userid']);
 
 
         $this->view->reportsEmployeeList = $this->model->reportsEmployeeList($_SESSION['userid']);
         $this->view->render('report/index');
     }
+
+    public function getJSONTasks()
+    {
+        $list = $this->view->tasks = $this->model->getTasks($_SESSION['userid'],$_GET['query']);
+        echo(json_encode([
+            'query' => 'Unit',
+            'suggestions'=>$list
+        ]));
+        die;
+    }
+
+    public function getFromRange()
+    {
+        $list = $this->view->tasks = $this->model->getFromRange($_GET['from'],$_GET['to'],$_SESSION['userid']);
+        echo json_encode(['data' => $list]);
+        die;
+    }
+
 
     public function listJson()
     {
@@ -47,10 +64,12 @@ class Report extends Controllers
 
      public function create()
      {
+        $numberOfHours = array_sum(array_column($_POST['completedTasks'],'time'));
         $report = new ReportEnt();
         $report ->setCompletedTasks($_POST['completedTasks']);
         $report ->setUserid($_SESSION['userid']);
-        $report ->setNumberOfHours($_SESSION['userid']);
+        $report ->setNumberOfHours($numberOfHours);
+        $report ->setReportDate($_POST['reportDate']);
 
 //         $reportValidator = new ReportValidator();
 //         $errors = $reportValidator->validateReport($report);

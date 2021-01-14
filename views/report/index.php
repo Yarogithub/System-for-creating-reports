@@ -5,6 +5,8 @@
             <div class="row">
                 <div class="col-sm-8"><h2>Reports <b>List</b></h2></div>
                 <div class="col-sm-4">
+                    <label>Raporty pomiędzy</label>
+                    <input type="text" class="form-control float-right"  placeholder="" id="range" aria-controls="reportTable">
                     <a href="#" data-toggle="modal" data-target="#myModal">
                         <button type="button" class="btn btn-primary add-new"><i class="fa fa-plus"></i> Add New
                         </button>
@@ -26,8 +28,9 @@
 
                 <?php else: ?>
                     <th>ID</th>
-                    <th>Zadaniar</th>
-                    <th>Liczba godzin</th>
+                    <th>Zadania</th>
+                    <th>Godziny</th>
+                    <th>Data Raportu</th>
                     <th>Data utworzenia</th>
                     <th>Data edycji</th>
                     <th>Action</th>
@@ -46,8 +49,8 @@
 </div>
 
 <div id="myModal" class="modal fade">
-        <div class="modal-dialog modal-login">
-            <div class="modal-content" style="width: 150%!important;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" >
                 <form id="addReport" action="<?php echo URL; ?>Report/create" method="POST">
                     <div class="modal-header">
                         <h4 class="modal-title">Dodawanie: Raportu</h4>
@@ -57,8 +60,8 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>Godziny pracy</label>
-                            <input type="text" name="numberOfHours" class="form-control daterange"  placeholder="Nazwa">
+                            <label>Raport z dnia</label>
+                            <input type="text" name="reportDate" class="form-control daterange"  placeholder="Nazwa">
                             <div class="invalid-feedback" id="EditError">
                             </div>
                         </div>
@@ -75,22 +78,24 @@
                                 </thead>
                                 <tbody id="append">
                                 <tr>
-                                    <td>1</td>
+                                    <td class="valuesIDWidth" >1</td>
                                     <td class="valuesInputWidth">
-                                        <input type="text" class="form-control daterange" name="completedTasks[0][time]">
+                                        <input type="text" class="form-control" name="completedTasks[0][time]">
                                         <div class="invalid-feedback" id="items0irpfPercentageError">
                                         </div>
                                     </td>
-                                    <td class="valuesInputWidth">
-                                        <select class="form-control" name="completedTasks[0][task]" >
-                                            <?php
-                                            $tasks = $this->tasks;
-                                            foreach ($tasks as $value): ?>
-                                                <option value="<?= $value['id']; ?>"><?= $value['name']; ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
+                                    <td class="valuesTaskWidth" >
+                                        <input type="text" class="form-control autocomplete" name="completedTasks[0][task]">
+                                        <div class="invalid-feedback" id="items0irpfPercentageError">
+                                        </div>
+                                        <div class="autocomplete-suggestions">
+                                            <div class="autocomplete-group"><strong></strong></div>
+                                            <div class="autocomplete-suggestion autocomplete-selected"></div>
+                                            <div class="autocomplete-suggestion"></div>
+                                            <div class="autocomplete-suggestion"></div>
+                                        </div>
                                     </td>
-                                    <td><button type="button"  class="btn btn-danger deleteItem">Delete</button></td>
+                                    <td class="valueActionWidth"><button type="button"  class="btn btn-danger deleteItem">Delete</button></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -171,7 +176,7 @@
     $(document).ready(function () {
         var role = '<?php echo $_SESSION['role'];?>';
         var columns = [{"data": "reportid"},
-                       {"data": "completedTasks"},
+                       {"data": "tasks"},
                        {"data": "numberOfHours"},
 
         ];
@@ -181,6 +186,7 @@
         }
         columns = [...columns,
             ...[
+                {"data": "reportDate"},
                 {"data": "createdAt"},
                 {"data": "updatedAt"},
                 {
@@ -193,7 +199,10 @@
         $("#reportTable").DataTable({
             ajax: '<?php echo URL; ?>Report/listJson',
 
-            columns: columns
+            columns: columns,
+            "drawCallback": function ( row, data, start, end, display ) {
+
+            },
         });
 
 
@@ -212,20 +221,23 @@
     //         picker.container.find(".calendar-table").hide();
     //     });
     // };
-
     $(document).ready(function () {
         $('.daterange').daterangepicker({
-            timePicker : true,
-            timePicker24Hour : true,
-            timePickerIncrement : 1,
-            timePickerSeconds : false,
+            "singleDatePicker": true,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            },
+            "startDate": moment(),
+            "endDate": moment(),
             locale : {
-                format : 'HH:mm'
-            }
-        }).on('show.daterangepicker', function(ev, picker) {
-            picker.container.find(".calendar-table").hide();
+                    format : 'YYYY-MM-DD'
+                    }
+        }, function(start, end, label) {
+            console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
         });
     });
+
 
 
     $(document).on('submit', '#addReport', function () {
@@ -242,21 +254,7 @@
                     $('#reportTable').DataTable().ajax.reload();
                 },
                 error: function (data) {
-                    var error = JSON.parse(data.responseText);
-                    var errors = error.errors;
-                    var contentError = errors.content;
 
-                    $.each(errors, function (index, value) {
-
-                        $('textarea[name="' + index + '"]').addClass("is-invalid");
-
-                        $('#' + index + "Error").html(value);
-                    });
-
-                    if(contentError === undefined)
-                    {
-                        $('textarea[name="content"]').removeClass("is-invalid");
-                    }
                 },
             });
         });
@@ -270,36 +268,36 @@
         let item = parseInt(td);
 
         let tr = `<tr>
-                    <td>${item + 1}</td>
+                    <td class="valuesIDWidth">${item + 1}</td>
                     <td class="valuesInputWidth">
-                    <input type="text" class="form-control daterange" name="completedTasks[${item}][time]">
-                    <div class="invalid-feedback" id="items0irpfPercentageError">
-                    </div>
+                        <input type="text" class="form-control" name="completedTasks[${item}][time]">
+                        <div class="invalid-feedback" id="items${item}irpfPercentageError">
+                        </div>
                     </td>
-                    <td class="valuesInputWidth">
-                    <select class="form-control" name="completedTasks[${item}][task]" >
-                        <?php
-                        $tasks = $this->tasks;
-                             foreach ($tasks as $value): ?>
-                            <option value="<?= $value['id']; ?>"><?= $value['name']; ?></option>
-                        <?php endforeach; ?>
-                    </select>
+                    <td class="valuesTaskWidth">
+                        <input type="text" class="form-control autocomplete" name="completedTasks[${item}][task]">
+                        <div class="invalid-feedback" id="items${item}irpfPercentageError">
+                        </div>
+                          <div class="autocomplete-suggestions">
+                                <div class="autocomplete-group"><strong></strong></div>
+                                <div class="autocomplete-suggestion autocomplete-selected"></div>
+                                <div class="autocomplete-suggestion"></div>
+                                <div class="autocomplete-suggestion"></div>
+                           </div>
                     </td>
-                    <td><button type="button"  class="btn btn-danger deleteItem">Delete</button></td>
+                    <td class="valueActionWidth"><button type="button"  class="btn btn-danger deleteItem">Delete</button></td>
                   </tr>`;
 
         let tableBody = $("#itemsTable tbody");
         tableBody.append(tr);
-        $('.daterange').daterangepicker({
-            timePicker : true,
-            timePicker24Hour : true,
-            timePickerIncrement : 1,
-            timePickerSeconds : false,
-            locale : {
-                format : 'HH:mm'
+
+        $(".autocomplete").autocomplete({
+            serviceUrl: window.location+'/getJSONTasks',
+            onSearchComplete: function (query, suggestions) {
+            },
+            minLength: 1,
+            onSelect: function (suggestion) {
             }
-        }).on('show.daterangepicker', function(ev, picker) {
-            picker.container.find(".calendar-table").hide();
         });
     });
 
@@ -356,7 +354,7 @@
                         $('textarea[name="' + index + '"]').addClass("is-invalid");
 
                         $('#' + index + "EditError").html(value);
-                    })
+                    });
 
                     if(contentError === undefined)
                     {
@@ -416,66 +414,63 @@
 
         });
 
+    $(document).ready(function () {
+        $('#range').daterangepicker({
+            "showDropdowns": true,
+            "autoApply": false,
+            locale: {
+                format: 'YYYY-MM-DD'
+            },
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            },
+            "alwaysShowCalendars": true,
+        }, function(start, end, label) {
+
+            var from = start.format('YYYY-MM-DD');
+            var to = end.format('YYYY-MM-DD');
+            var range = {'from':from,'to':to};
+
+            $.ajax({
+                type: "GET",
+                url: window.location+'/getFromRange',
+                data:range,
+                success: function (data) {
+                    var newData = JSON.parse(data).data;
+
+                    if(jQuery.isEmptyObject(newData))
+                    {
+                        newData = [];
+                    }
+                    var table;
+                    if ($.fn.dataTable.isDataTable('#reportTable')) {
+                        table = $('#reportTable').DataTable();
+                        table.clear();
+                        table.rows.add(newData).draw();
+                    }
+                    else {
+                        table = $('#reportTable').DataTable({
+                            "data": newData,
+                            "deferRender": true,
+                            "pageLength": 25,
+                            "retrieve": true,
+                        });
+                    }
+                },
+                error: function (data) {
+                },
+            });
+
+        });
+
+    });
+
 
 </script>
-
-
-<!--        --><?php
-//        if(Session::get('role') == 'admin')
-//        {
-//            echo '<thead class="thead-dark">
-//            <tr>
-//                <th scope="col">ReportId</th>
-//                <th scope="col">Username</th>
-//                <th scope="col">Content</th>
-//                <th scope="col">Date</th>
-//            </tr>
-//            </thead>';
-//            foreach ($this->reportsAdminList as $key => $value) {
-//                echo '<tbody>';
-//                echo '<tr>';
-//                echo '<th scope="row">' . $value['reportid'] . '</th>';
-//                echo '<td>' . $value['login'] . '</td>';
-//                echo '<td>' . $value['content'] . '</td>';
-//                echo '<td>' . $value['createdAt'] . '</td>';
-//                echo '</tr>';
-//                echo '</tbody>';
-//            }
-//        }
-//        else {
-//            echo '<thead class="thead-dark">
-//            <tr>
-//                <th scope="col">#</th>
-//                <th scope="col">Content</th>
-//                <th scope="col">Date</th>
-//                <th scope="col">Edit</th>
-//                <th scope="col">Delete</th>
-//            </tr>
-//            </thead>';
-//            foreach ($this->reportsEmployeeList as $key => $value) {
-//                echo '<tbody>';
-//                echo '<tr>';
-//                echo '<th scope="row">' . ++$key . '</th>';
-//                echo '<td>' . $value['content'] . '</td>';
-//                echo '<td>' . $value['createdAt'] . '</td>';
-//                echo '<td>
-//                    <a class="text-info" href="' . URL . 'report/edit/' . $value['reportid'] . '">Edit</a>
-//                    </td>
-//                    <td>
-//                    <a class="text-danger" href="' . URL . 'report/delete/' . $value['reportid'] . '">Delete</a>
-//                </td>';
-//                echo '</tr>';
-//
-//
-//            }
-//            echo'<td>
-//                    <a class="text-dark" href="' . URL . 'report/createSave/'.'">+ADD</a>
-//                </td>';
-//
-//            echo '</tbody>';
-//        }
-//        ?>
-<!--        </table>-->
-<!--        </div>-->
 
 

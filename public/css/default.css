@@ -23,6 +23,26 @@ body{
 	opacity: 0!important;
 }
 
+.valuesIDWidth
+{
+	width: 5%!important;
+}
+
+.valuesTimeWidth
+{
+	width: 16%!important;
+}
+
+.valuesTaskWidth
+{
+	width: 65%!important;
+}
+
+.valueActionWidth
+{
+	width: 14%!important;
+}
+
 
 footer
 {
@@ -101,9 +121,9 @@ footer
 .table-title .add-new i {
 	margin-right: 4px;
 }
-table.table {
-	table-layout: fixed;
-}
+/*table.table {*/
+/*	table-layout: fixed;*/
+/*}*/
 
 table.table td {
 		white-space: normal !important;

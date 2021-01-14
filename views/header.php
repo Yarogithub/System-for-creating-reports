@@ -32,11 +32,14 @@
     <script src="<?php echo URL; ?>/public/js/DataTables/DataTables-1.10.23/js/dataTables.bootstrap4.min.js"></script>
 
     <link rel="stylesheet" type="text/css" media="all" href="<?php echo URL; ?>/public/js/daterangepicker-master/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="<?php echo URL; ?>/public/Autocomplete/autoComplete.css" />
     <script type="text/javascript" src="<?php echo URL; ?>/public/js/daterangepicker-master/moment.min.js"></script>
 
 
     <script type="text/javascript" src="<?php echo URL; ?>/public/js/daterangepicker-master/daterangepicker.js"></script>
     <script type="text/javascript" src="<?php echo URL; ?>/public/js/daterangepicker-master/daterangepickerscript.js"></script>
+    <script type="text/javascript" src="<?php echo URL; ?>/public/Autocomplete/jquery.autocomplete.js"></script>
+    <script type="text/javascript" src="<?php echo URL; ?>/public/Autocomplete/autoComplete.js"></script>
 
 </head>
 <body>

@@ -7,8 +7,25 @@ class ReportEnt
     protected $numberOfHours;
     protected $updatedAt;
     protected $createdAt;
+    protected $reportDate;
     protected $userid;
     protected $reportid;
+
+    /**
+     * @return mixed
+     */
+    public function getReportDate()
+    {
+        return $this->reportDate;
+    }
+
+    /**
+     * @param mixed $reportDate
+     */
+    public function setReportDate($reportDate)
+    {
+        $this->reportDate = $reportDate;
+    }
 
     /**
      * @return mixed
