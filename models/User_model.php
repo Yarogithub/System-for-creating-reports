@@ -10,7 +10,7 @@ class User_model extends Model
 
     public function userList()
     {
-        return $this->db->selectAll('SELECT userid, login, role, name, lastName, phoneNumber, postalCode, country, city, hourlyRate FROM user');
+        return $this->db->selectAll('SELECT userid, login, role, name, lastName, hourlyRate FROM user');
     }
 
     public function userSingleList($userid)

@@ -17,10 +17,10 @@
                 <th>Rola</th>
                 <th>Imie</th>
                 <th>Nazwisko</th>
-                <th>Numer telefonu</th>
-                <th>Kod pocztowy</th>
-                <th>Kraj</th>
-                <th>Miejscowość</th>
+<!--                <th>Numer telefonu</th>-->
+<!--                <th>Kod pocztowy</th>-->
+<!--                <th>Kraj</th>-->
+<!--                <th>Miejscowość</th>-->
                 <th>Stawka godzinowa</th>
                 <th>Action</th>
             </tr>
@@ -32,10 +32,10 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
                 <td></td>
                 <td></td>
             </tbody>
@@ -302,10 +302,6 @@
                     {"data": "role"},
                     {"data": "name"},
                     {"data": "lastName"},
-                    {"data": "phoneNumber"},
-                    {"data": "postalCode"},
-                    {"data": "country"},
-                    {"data": "city"},
                     {"data": "hourlyRate"},
                     {
                         "data": '',

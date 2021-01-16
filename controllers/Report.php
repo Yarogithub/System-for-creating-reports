@@ -32,7 +32,31 @@ class Report extends Controllers
 
     public function getFromRange()
     {
-        $list = $this->view->tasks = $this->model->getFromRange($_GET['from'],$_GET['to'],$_SESSION['userid']);
+        $role = $_SESSION['role'];
+
+//        print_r($role);
+//        die;
+        if($role == 'admin')
+        {
+            $list = $this->model->getFromRangeAdmin($_GET['from'],$_GET['to']);
+            echo json_encode(['data' => $list]);
+            die;
+        }
+        else
+        {
+            $list = $this->model->getFromRange($_GET['from'],$_GET['to'],$_SESSION['userid']);
+            echo json_encode(['data' => $list]);
+            die;
+        }
+
+    }
+
+    public function editJSON($reportid)
+    {
+        $report = new  ReportEnt();
+        $report->setReportid($reportid);
+
+        $list = $this->model->editJSON($report);
         echo json_encode(['data' => $list]);
         die;
     }
@@ -88,20 +112,22 @@ class Report extends Controllers
 
     public function edit($reportId)
     {
+        $numberOfHours = array_sum(array_column($_POST['completedTasks'],'time'));
         $report = new ReportEnt();
-        $report ->setContent($_POST['content']);
-        $report ->setUserid($_SESSION['userid']);
+        $report ->setCompletedTasks($_POST['completedTasks']);
         $report ->setReportid($reportId);
+        $report ->setNumberOfHours($numberOfHours);
+        $report ->setReportDate($_POST['reportDate']);
 
-        $reportValidator = new ReportValidator();
-        $errors = $reportValidator->validateReport($report);
-
-        if (!empty($errors))
-        {
-            header('HTTP/1.1 400 Bad Request');
-            echo json_encode(['errors' => $errors]);
-            die;
-        }
+//        $reportValidator = new ReportValidator();
+//        $errors = $reportValidator->validateReport($report);
+//
+//        if (!empty($errors))
+//        {
+//            header('HTTP/1.1 400 Bad Request');
+//            echo json_encode(['errors' => $errors]);
+//            die;
+//        }
 
         $this->model->edit($report);
         die;

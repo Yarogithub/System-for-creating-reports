@@ -19,16 +19,19 @@
             <thead>
             <tr>
                 <?php if ($_SESSION['role'] == 'admin') : ?>
-                    <th>ReportId</th>
-                    <th>Content</th>
-                    <th>Userid</th>
-                    <th>Login</th>
-                    <th>CreatedAt</th>
+                    <th>ID</th>
+                    <!--                    <th>Zadania</th>-->
+                    <th>Godziny</th>
+                    <th>Imie</th>
+                    <th>Nazwisko</th>
+                    <th>Data Raportu</th>
+                    <th>Data utworzenia</th>
+                    <th>Data edycji</th>
                     <th>Action</th>
 
                 <?php else: ?>
                     <th>ID</th>
-                    <th>Zadania</th>
+<!--                    <th>Zadania</th>-->
                     <th>Godziny</th>
                     <th>Data Raportu</th>
                     <th>Data utworzenia</th>
@@ -67,7 +70,7 @@
                         </div>
                         <div class="form-group">
                             <label for="itemsTable">Wykonane zadania</label>
-                            <table id="itemsTable" class="table table-bordered">
+                            <table id="itemsTable" class="table table-bordered itemsTable">
                                 <thead class="thead-dark">
                                 <tr style="background-color: #1a4d80;color: white;">
                                     <th scope="col">#</th>
@@ -113,7 +116,7 @@
 
 
 <div id="myEditModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <button type="button" class="close closeButton" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -124,11 +127,27 @@
             <div class="modal-body">
                 <form id="editForm">
                     <div class="form-group">
-                        <label class="text-white" for="Report">Report</label>
-                        <textarea id="textarea1" class="form-control" name="content" rows="8"></textarea>
-                        <div class="invalid-feedback" id="contentEditError">
+                        <label>Raport z dnia</label>
+                        <input type="hidden" name="getId">
+                        <input type="text" name="reportDate" class="form-control daterange"  placeholder="Nazwa">
+                        <div class="invalid-feedback" id="EditError">
                         </div>
-                        <input type="hidden" id="button1">
+                    </div>
+                    <div class="form-group">
+                        <label for="itemsEditTable">Wykonane zadania</label>
+                        <table id="itemsEditTable" class="table table-bordered itemsTable">
+                            <thead class="thead-dark">
+                            <tr style="background-color: #1a4d80;color: white;">
+                                <th scope="col">#</th>
+                                <th scope="col">Czas zadania</th>
+                                <th scope="col">Zadanie</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody id="append">
+                            </tbody>
+                        </table>
+                        <input type="button" class="btn btn-info addItem float-left mb-1" value="+">
                     </div>
             </div>
             <div class="modal-footer">
@@ -176,13 +195,13 @@
     $(document).ready(function () {
         var role = '<?php echo $_SESSION['role'];?>';
         var columns = [{"data": "reportid"},
-                       {"data": "tasks"},
+                       // {"data": "tasks"},
                        {"data": "numberOfHours"},
 
         ];
         if (role === 'admin') {
-            columns.push({"data": "userid"});
-            columns.push({"data": "login"});
+            columns.push({"data": "name"});
+            columns.push({"data": "lastName"});
         }
         columns = [...columns,
             ...[
@@ -234,7 +253,6 @@
                     format : 'YYYY-MM-DD'
                     }
         }, function(start, end, label) {
-            console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
         });
     });
 
@@ -260,7 +278,7 @@
         });
 
     $(document).on('click', '.addItem', function () {
-        let td = $('#itemsTable tbody tr:last').children("td:first").html();
+        let td = $('.itemsTable tbody tr:last').children("td:first").html();
         if(td === undefined)
         {
             td = '0';
@@ -288,7 +306,7 @@
                     <td class="valueActionWidth"><button type="button"  class="btn btn-danger deleteItem">Delete</button></td>
                   </tr>`;
 
-        let tableBody = $("#itemsTable tbody");
+        let tableBody = $(".itemsTable tbody");
         tableBody.append(tr);
 
         $(".autocomplete").autocomplete({
@@ -309,65 +327,91 @@
 
     $(document).on('click', '.edit', function () {
 
-        var test = $(this).parents('tr');
-        var tds = test.find('td');
-        var id = tds[0].textContent;
-        var content = tds[1].textContent;
+        var parent = $(this).parents('tr');
+        var td = parent.find('td');
+        var id = td[0].textContent;
 
-        $('#button1').val(id);
-        $('#textarea1').val(content);
+        $('input[name="getId"]').val(id);
+
+        var getID = $('input[name="getId"]').val();
+
+        $.ajax({
+            type: 'POST',
+            url: "<?php echo URL; ?>Report/editJSON/" + getID,
+            data: '',
+            success: function (data) {
+                var form = JSON.parse(data).data;
+                var tasks = form.tasks;
+                var report = form.report;
+
+                $('input[name="reportDate"]').val(report[0].reportDate);
+
+                $('.itemsTable tbody').empty();
+
+
+                $.each(tasks, function (index,value) {
+                    let tr = ` <tr>
+                                <td class="valuesIDWidth" >${index + 1}</td>
+                                <td class="valuesInputWidth">
+                                    <input type="text" class="form-control" value="${value.timeForTask}" name="completedTasks[${index}][time]">
+                                    <div class="invalid-feedback" id="completedTasks${index}time">
+                                    </div>
+                                </td>
+                                <td class="valuesTaskWidth" >
+                                    <input type="text" class="form-control autocomplete" value="${value.name}" name="completedTasks[${index}][task]">
+                                    <div class="invalid-feedback" id="completedTasks${index}task">
+                                    </div>
+                                    <div class="autocomplete-suggestions">
+                                        <div class="autocomplete-group"><strong></strong></div>
+                                        <div class="autocomplete-suggestion autocomplete-selected"></div>
+                                        <div class="autocomplete-suggestion"></div>
+                                        <div class="autocomplete-suggestion"></div>
+                                    </div>
+                                </td>
+                                <td class="valueActionWidth"><button type="button"  class="btn btn-danger deleteItem">Delete</button></td>
+                            </tr>`;
+                    let tableBody = $(".itemsTable tbody");
+                    tableBody.append(tr);
+
+                    $(".autocomplete").autocomplete({
+                        serviceUrl: window.location+'/getJSONTasks',
+                        onSearchComplete: function (query, suggestions) {
+                        },
+                        minLength: 1,
+                        onSelect: function (suggestion) {
+                        }
+                    });
+                });
+            },
+            error: function (data) {
+
+            },
+        });
 
     });
 
-    $(document).on('click', '#saveModalButton', function () {
-
-        var frm = $('#myEditModal');
-
-        var content = $('textarea#textarea1').val();
-
-        var id = $('input#button1').val();
+    $(document).on('submit', '#editForm', function (e) {
 
 
-
-        frm.submit(function (e) {
+        var id = $('input[name="getId"]').val();
 
             e.preventDefault();
 
+            var form = $(this);
 
             $.ajax({
                 type: 'POST',
-                url: "<?php echo URL; ?>report/edit/" + id,
-                data: {
-                    'content': content
-                },
+                url: "<?php echo URL; ?>Report/edit/" + id,
+                data: form.serialize(),
                 success: function (data) {
                     $('#myEditModal').modal('toggle');
                     $('#reportTable').DataTable().ajax.reload();
                 },
                 error: function (data) {
-                    var error = JSON.parse(data.responseText);
-                    var errors = error.errors;
-                    var contentError = errors.content;
 
-                    $.each(errors, function (index, value) {
-
-                        $('textarea[name="' + index + '"]').addClass("is-invalid");
-
-                        $('#' + index + "EditError").html(value);
-                    });
-
-                    if(contentError === undefined)
-                    {
-                        $('textarea[name="content"]').removeClass("is-invalid");
-                    }
                 },
             });
-
-
         });
-
-
-    });
 
     $(document).on('click', '.delete', function () {
 
@@ -414,7 +458,6 @@
 
         });
 
-    $(document).ready(function () {
         $('#range').daterangepicker({
             "showDropdowns": true,
             "autoApply": false,
@@ -467,9 +510,6 @@
             });
 
         });
-
-    });
-
 
 </script>
 
