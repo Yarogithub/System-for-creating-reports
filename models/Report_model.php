@@ -238,7 +238,14 @@ class Report_model extends Model
 
     public function delete($reportId)
     {
-    $this->db->delete('report', "reportid = $reportId", 1);
+        $limit = $this->db->selectAll('SELECT *  FROM dailyTasks WHERE reportid=:reportid',
+            [
+                'reportid'=>$reportId
+            ]);
+
+        $this->db->delete('dailyTasks', "reportid = $reportId", count($limit));
+
+        $this->db->delete('report', "reportid = $reportId", 1);
     }
 
 

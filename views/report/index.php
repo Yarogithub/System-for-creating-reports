@@ -175,8 +175,7 @@
                 <form id="deleteForm">
                     <div class="form-group">
                         <p>Do you really want to delete these records? This process cannot be undone.</p>
-
-                        <input type="hidden" id="button2"/>
+                        <input type="hidden" name="getId"/>
                     </div>
             </div>
             <div class="modal-footer">
@@ -258,7 +257,7 @@
 
 
 
-    $(document).on('submit', '#addReport', function () {
+    $(document).on('submit', '#addReport', function (e) {
             e.preventDefault();
 
             var form = $(this);
@@ -420,44 +419,33 @@
 
         var id = tds[0].textContent;
 
-        $('#button2').val(id);
+        $('input[name="getId"]').val(id);
 
     });
 
-    $(document).on('click', '#deleteModalButton',
-        function () {
-
-            var frm = $('#myDeleteModal');
+    $(document).on('submit', '#deleteForm', function (e) {
 
 
-            var id = $('input#button2').val();
+        var id = $('input[name="getId"]').val();
 
+        e.preventDefault();
 
-            frm.submit(function (e) {
+        var form = $(this);
 
-                e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: "<?php echo URL; ?>Report/delete/" + id,
+            data: form.serialize(),
+            success: function (data) {
+                $('#myDeleteModal').modal('toggle');
+                $('#reportTable').DataTable().ajax.reload();
+            },
+            error: function (data) {
 
-
-                $.ajax({
-                    type: 'POST',
-                    url: "<?php echo URL; ?>report/delete/" + id,
-                    data: '',
-                    success: function (data) {
-                        $('#myDeleteModal').modal('toggle');
-                        $('#reportTable').DataTable().ajax.reload();
-                    },
-                    error: function (data) {
-                        console.log('An error occurred.');
-                        console.log(data);
-                    },
-                });
-
-
-            });
-
-
+            },
         });
-
+    });
+    $(document).ready(function () {
         $('#range').daterangepicker({
             "showDropdowns": true,
             "autoApply": false,
@@ -473,43 +461,52 @@
                 'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
             },
             "alwaysShowCalendars": true,
+            "startDate": moment().startOf('month'),
+            "endDate": moment().endOf('month')
         }, function(start, end, label) {
 
             var from = start.format('YYYY-MM-DD');
             var to = end.format('YYYY-MM-DD');
             var range = {'from':from,'to':to};
 
-            $.ajax({
-                type: "GET",
-                url: window.location+'/getFromRange',
-                data:range,
-                success: function (data) {
-                    var newData = JSON.parse(data).data;
+            $(document).off('change').on('change','input',function (e) {
+                e.preventDefault();
 
-                    if(jQuery.isEmptyObject(newData))
-                    {
-                        newData = [];
-                    }
-                    var table;
-                    if ($.fn.dataTable.isDataTable('#reportTable')) {
-                        table = $('#reportTable').DataTable();
-                        table.clear();
-                        table.rows.add(newData).draw();
-                    }
-                    else {
-                        table = $('#reportTable').DataTable({
-                            "data": newData,
-                            "deferRender": true,
-                            "pageLength": 25,
-                            "retrieve": true,
-                        });
-                    }
-                },
-                error: function (data) {
-                },
+                $.ajax({
+                    type: "GET",
+                    url: window.location+'/getFromRange',
+                    data:range,
+                    cache: false,
+                    success: function (data) {
+                        var newData = JSON.parse(data).data;
+
+                        if(jQuery.isEmptyObject(newData))
+                        {
+                            newData = [];
+                        }
+                        var table;
+                        if ($.fn.dataTable.isDataTable('#reportTable')) {
+                            table = $('#reportTable').DataTable();
+                            table.clear();
+                            table.rows.add(newData).draw();
+                        }
+                        else {
+                            table = $('#reportTable').DataTable({
+                                "data": newData,
+                                "deferRender": true,
+                                "pageLength": 25,
+                                "retrieve": true,
+                            });
+                        }
+                    },
+                    error: function (data) {
+                    },
+                });
             });
 
         });
+
+    });
 
 </script>
 
