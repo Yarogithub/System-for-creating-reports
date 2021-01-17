@@ -44,16 +44,10 @@
     <script type="text/javascript" src="<?php echo URL; ?>/public/js/daterangepicker-master/daterangepickerscript.js"></script>
     <script type="text/javascript" src="<?php echo URL; ?>/public/Autocomplete/jquery.autocomplete.js"></script>
     <script type="text/javascript" src="<?php echo URL; ?>/public/Autocomplete/autoComplete.js"></script>
-
-
+<!---->
+<!---->
     <script type="text/javascript" src="<?php echo URL; ?>/public/js/DataTables/Buttons-1.6.5/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="<?php echo URL; ?>/public/js/DataTables/Buttons-1.6.5/js/buttons.flash.min.js"></script>
-    <script type="text/javascript" src="<?php echo URL; ?>/public/js/DataTables/JSZip-2.5.0/jszip.min.js"></script>
-    <script type="text/javascript" src="<?php echo URL; ?>/public/js/DataTables/pdfmake-0.1.36/pdfmake.min.js"></script>
-    <script type="text/javascript" src="<?php echo URL; ?>/public/js/DataTables/pdfmake-0.1.36/vfs_fonts.js"></script>
-    <script type="text/javascript" src="<?php echo URL; ?>/public/js/DataTables/Buttons-1.6.5/js/buttons.html5.min.js"></script>
-    <script type="text/javascript" src="<?php echo URL; ?>/public/js/DataTables/Buttons-1.6.5/js/buttons.print.min.js"></script>
-    <script type="text/javascript" src="<?php echo URL; ?>/public/js/DataTables/Buttons-1.6.5/js/buttons.colVis.min.js"></script>
+
 
 </head>
 <body>

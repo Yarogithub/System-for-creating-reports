@@ -1,3 +1,10 @@
+<script type="text/javascript" src="<?php echo URL; ?>/public/js/DataTables/Buttons-1.6.5/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="<?php echo URL; ?>/public/js/DataTables/JSZip-2.5.0/jszip.min.js"></script>
+<script type="text/javascript" src="<?php echo URL; ?>/public/js/DataTables/pdfmake-0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="<?php echo URL; ?>/public/js/DataTables/pdfmake-0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="<?php echo URL; ?>/public/js/DataTables/Buttons-1.6.5/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="<?php echo URL; ?>/public/js/DataTables/Buttons-1.6.5/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="<?php echo URL; ?>/public/js/DataTables/Buttons-1.6.5/js/buttons.colVis.min.js"></script>
 
 <div class="table-responsive">
     <div class="table-wrapper">
@@ -43,9 +50,27 @@
             <tbody>
 
             </tbody>
-<!--            <tfoot>-->
-<!---->
-<!--            </tfoot>-->
+            <tfoot>
+                <?php if ($_SESSION['role'] == 'admin') : ?>
+                    <th></th>
+                    <!--                    <th>Zadania</th>-->
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+
+                <?php else: ?>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                <?php endif; ?>
+            </tfoot>
         </table>
     </div>
 </div>
@@ -218,58 +243,58 @@
             ajax: '<?php echo URL; ?>Report/listJson',
             dom: 'B<"br"><<"toolbar">frtip>',
             buttons: [
-                // {
-                //
-                //     extend: 'csvHtml5',
-                //     text:'<span class="glyphicon glyphicon-export"></span>CSV',
-                //     className: 'btn btn-info btn-lg',
-                //     footer: true
-                //     // exportOptions: {
-                //     //     columns: [ 0, 1, 2, 3, 6, 7, 8, 9, 10],
-                //     //     format: {
-                //     //         body: function (data, row, column, node) {
-                //     //             // Strip $ from salary column to make it numeric
-                //     //             return column === 2 ?
-                //     //                 data.replace(/\<br\/\>/g, ", ") :
-                //     //                 data;
-                //     //         }
-                //     //     }
-                //     // }
-                // },
-                // {
-                //     extend: 'excelHtml5',
-                //     text:'<span class="glyphicon glyphicon-export"></span>Excel',
-                //     className: 'btn btn-info btn-lg',
-                //     footer: true
-                //     // exportOptions: {
-                //     //     columns: [ 0, 1, 2, 3, 6, 7, 8, 9, 10],
-                //     //     format: {
-                //     //         body: function (data, row, column, node) {
-                //     //             // Strip $ from salary column to make it numeric
-                //     //             return column === 2 ?
-                //     //                 data.replace(/\<br\/\>/g, ", ") :
-                //     //                 data;
-                //     //         }
-                //     //     }
-                //     // }
-                // },
-                // {
-                //     extend: 'pdfHtml5',
-                //     text:'<span class="glyphicon glyphicon-export"></span>PDF',
-                //     className: 'btn btn-info btn-lg',
-                //     footer: true
-                //     // exportOptions: {
-                //     //     columns: [ 0, 1, 2, 3, 6, 7, 8],
-                //     //     format: {
-                //     //         body: function (data, row, column, node) {
-                //     //             // Strip $ from salary column to make it numeric
-                //     //             return column === 2 ?
-                //     //                 data.replace(/\<br\/\>/g, "\n") :
-                //     //                 data;
-                //     //         }
-                //     //     }
-                //     // }
-                // },
+                {
+
+                    extend: 'csvHtml5',
+                    text:'<span class="glyphicon glyphicon-export"></span>CSV',
+                    className: 'btn btn-info btn-lg',
+                    footer: true
+                    // exportOptions: {
+                    //     columns: [ 0, 1, 2, 3, 6, 7, 8, 9, 10],
+                    //     format: {
+                    //         body: function (data, row, column, node) {
+                    //             // Strip $ from salary column to make it numeric
+                    //             return column === 2 ?
+                    //                 data.replace(/\<br\/\>/g, ", ") :
+                    //                 data;
+                    //         }
+                    //     }
+                    // }
+                },
+                {
+                    extend: 'excelHtml5',
+                    text:'<span class="glyphicon glyphicon-export"></span>Excel',
+                    className: 'btn btn-info btn-lg',
+                    footer: true
+                    // exportOptions: {
+                    //     columns: [ 0, 1, 2, 3, 6, 7, 8, 9, 10],
+                    //     format: {
+                    //         body: function (data, row, column, node) {
+                    //             // Strip $ from salary column to make it numeric
+                    //             return column === 2 ?
+                    //                 data.replace(/\<br\/\>/g, ", ") :
+                    //                 data;
+                    //         }
+                    //     }
+                    // }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    text:'<span class="glyphicon glyphicon-export"></span>PDF',
+                    className: 'btn btn-info btn-lg',
+                    footer: true
+                    // exportOptions: {
+                    //     columns: [ 0, 1, 2, 3, 6, 7, 8],
+                    //     format: {
+                    //         body: function (data, row, column, node) {
+                    //             // Strip $ from salary column to make it numeric
+                    //             return column === 2 ?
+                    //                 data.replace(/\<br\/\>/g, "\n") :
+                    //                 data;
+                    //         }
+                    //     }
+                    // }
+                },
                 // 'colvis'
             ],
             columns: columns,
