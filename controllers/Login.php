@@ -19,6 +19,7 @@ class Login extends Controllers
 
     function run()
     {
+        die('sadadasda');
         $errors = [];
 
 

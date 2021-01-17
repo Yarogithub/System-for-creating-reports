@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form id="loginForm" action="login/run" method="post">
+            <form id="loginForm" action="<?php echo URL; ?>Login/run" method="post">
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -44,7 +44,7 @@
 <div id="myForgotPasswordModal" class="modal fade">
     <div class="modal-dialog modal-login">
         <div class="modal-content">
-            <form id="forgotPasswordForm" action="login/forgotPassword" method="post">
+            <form id="forgotPasswordForm" action="<?php echo URL; ?>Login/forgotPassword" method="post">
                 <div class="modal-header">
                     <h4 class="modal-title">Password: Forgot</h4>
                     <button type="button" name="close" class="close closeButton" data-dismiss="modal" aria-label="Close">

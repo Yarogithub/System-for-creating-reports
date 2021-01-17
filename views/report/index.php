@@ -5,12 +5,9 @@
             <div class="row">
                 <div class="col-sm-8"><h2>Reports <b>List</b></h2></div>
                 <div class="col-sm-4">
-                    <label>Raporty pomiędzy</label>
-                    <input type="text" class="form-control float-right"  placeholder="" id="range" aria-controls="reportTable">
-                    <a href="#" data-toggle="modal" data-target="#myModal">
-                        <button type="button" class="btn btn-primary add-new"><i class="fa fa-plus"></i> Add New
-                        </button>
-                    </a>
+<!--                    <label>Raporty pomiędzy</label>-->
+<!--                    <input type="text" class="form-control float-right"  placeholder="" id="range" aria-controls="reportTable">-->
+
                 </div>
             </div>
         </div>
@@ -46,7 +43,9 @@
             <tbody>
 
             </tbody>
-
+<!--            <tfoot>-->
+<!---->
+<!--            </tfoot>-->
         </table>
     </div>
 </div>
@@ -177,12 +176,13 @@
                         <p>Do you really want to delete these records? This process cannot be undone.</p>
                         <input type="hidden" name="getId"/>
                     </div>
-            </div>
+
             <div class="modal-footer">
                 <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 <input type="submit" value="DELETE" id="deleteModalButton" class="btn btn-danger">
             </div>
             </form>
+            </div>
         </div>
     </div>
 
@@ -216,29 +216,77 @@
 
         $("#reportTable").DataTable({
             ajax: '<?php echo URL; ?>Report/listJson',
-
+            dom: 'B<"br"><<"toolbar">frtip>',
+            buttons: [
+                // {
+                //
+                //     extend: 'csvHtml5',
+                //     text:'<span class="glyphicon glyphicon-export"></span>CSV',
+                //     className: 'btn btn-info btn-lg',
+                //     footer: true
+                //     // exportOptions: {
+                //     //     columns: [ 0, 1, 2, 3, 6, 7, 8, 9, 10],
+                //     //     format: {
+                //     //         body: function (data, row, column, node) {
+                //     //             // Strip $ from salary column to make it numeric
+                //     //             return column === 2 ?
+                //     //                 data.replace(/\<br\/\>/g, ", ") :
+                //     //                 data;
+                //     //         }
+                //     //     }
+                //     // }
+                // },
+                // {
+                //     extend: 'excelHtml5',
+                //     text:'<span class="glyphicon glyphicon-export"></span>Excel',
+                //     className: 'btn btn-info btn-lg',
+                //     footer: true
+                //     // exportOptions: {
+                //     //     columns: [ 0, 1, 2, 3, 6, 7, 8, 9, 10],
+                //     //     format: {
+                //     //         body: function (data, row, column, node) {
+                //     //             // Strip $ from salary column to make it numeric
+                //     //             return column === 2 ?
+                //     //                 data.replace(/\<br\/\>/g, ", ") :
+                //     //                 data;
+                //     //         }
+                //     //     }
+                //     // }
+                // },
+                // {
+                //     extend: 'pdfHtml5',
+                //     text:'<span class="glyphicon glyphicon-export"></span>PDF',
+                //     className: 'btn btn-info btn-lg',
+                //     footer: true
+                //     // exportOptions: {
+                //     //     columns: [ 0, 1, 2, 3, 6, 7, 8],
+                //     //     format: {
+                //     //         body: function (data, row, column, node) {
+                //     //             // Strip $ from salary column to make it numeric
+                //     //             return column === 2 ?
+                //     //                 data.replace(/\<br\/\>/g, "\n") :
+                //     //                 data;
+                //     //         }
+                //     //     }
+                //     // }
+                // },
+                // 'colvis'
+            ],
             columns: columns,
             "drawCallback": function ( row, data, start, end, display ) {
 
             },
         });
-
+        $("div.toolbar").html('<div class="dataTables_filter" style="float: left" ><label>Okres raportów:<input type="text" class=""  placeholder="" id="range" aria-controls="listOfExpenses"></label></div>');
+        $("div.br").html('<div style="float: right">\n' +
+            '                            <a href="#" data-toggle="modal" data-target="#myModal">\n' +
+            '                        <button type="button" class="btn btn-primary add-new"><i class="fa fa-plus"></i> Add New\n' +
+            '                        </button>\n' +
+            '                    </a>' +
+            '    </div><br/><br/>');
 
     });
 
-    // $.fn.myfunction = function () {
-    //     $('.daterange').daterangepicker({
-    //         timePicker : true,
-    //         timePicker24Hour : true,
-    //         timePickerIncrement : 1,
-    //         timePickerSeconds : false,
-    //         locale : {
-    //             format : 'HH:mm'
-    //         }
-    //     }).on('show.daterangepicker', function(ev, picker) {
-    //         picker.container.find(".calendar-table").hide();
-    //     });
-    // };
     $(document).ready(function () {
         $('.daterange').daterangepicker({
             "singleDatePicker": true,
