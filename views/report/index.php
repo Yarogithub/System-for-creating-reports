@@ -14,6 +14,7 @@
                 <div class="col-sm-4">
 <!--                    <label>Raporty pomiędzy</label>-->
 <!--                    <input type="text" class="form-control float-right"  placeholder="" id="range" aria-controls="reportTable">-->
+                    <input type="hidden" id="hourlyRate" value="<?=$this->hourlyRate['hourlyRate'] ?>">
 
                 </div>
             </div>
@@ -265,18 +266,18 @@
                     extend: 'excelHtml5',
                     text:'<span class="glyphicon glyphicon-export"></span>Excel',
                     className: 'btn btn-info btn-lg',
-                    footer: true
-                    // exportOptions: {
-                    //     columns: [ 0, 1, 2, 3, 6, 7, 8, 9, 10],
-                    //     format: {
-                    //         body: function (data, row, column, node) {
-                    //             // Strip $ from salary column to make it numeric
-                    //             return column === 2 ?
-                    //                 data.replace(/\<br\/\>/g, ", ") :
-                    //                 data;
-                    //         }
-                    //     }
-                    // }
+                    footer: true,
+                    exportOptions: {
+                        columns: [1, 2, 3],
+                        format: {
+                            body: function (data, row, column, node) {
+                                // Strip $ from salary column to make it numeric
+                                return column === 2 ?
+                                    data.replace(/\<br\/\>/g, ", ") :
+                                    data;
+                            }
+                        }
+                    }
                 },
                 {
                     extend: 'pdfHtml5',
@@ -298,8 +299,81 @@
                 // 'colvis'
             ],
             columns: columns,
-            "drawCallback": function ( row, data, start, end, display ) {
+            initComplete: function ( row, data, start, end, display ) {
+                var api = this.api(), data;
 
+                // Remove the formatting to get integer data for summation
+                var intVal = function ( i ) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '')*1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+
+                var total = api
+                    .column(1)
+                    .data()
+                    .reduce( function (a, b) {
+                        return (intVal(a) + intVal(b));
+                    }, 0 );
+
+                var hourlyRate = $('#hourlyRate').val();
+
+                var roleOfUser = '<?php echo $_SESSION['role'];?>';
+
+                if(roleOfUser !== 'admin')
+                {
+                    $( api.column( 3 ).footer() ).html(
+                        'Netto: '+(total*hourlyRate - total*hourlyRate*0.18)
+                    );
+
+                    $( api.column( 2 ).footer() ).html(
+                        'Brutto: '+total*hourlyRate
+                    );
+
+                    $( api.column( 1 ).footer() ).html(
+                        'Godziny: '+total
+                    );
+                }
+
+
+            },
+            "drawCallback": function ( row, data, start, end, display ) {
+                var api = this.api(), data;
+
+                // Remove the formatting to get integer data for summation
+                var intVal = function ( i ) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '')*1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+
+                var total = api
+                    .column(1,{search: 'applied'})
+                    .data()
+                    .reduce( function (a, b) {
+                        return (intVal(a) + intVal(b));
+                    }, 0 );
+
+                var hourlyRate = $('#hourlyRate').val();
+
+                var roleOfUser = '<?php echo $_SESSION['role'];?>';
+
+                if(roleOfUser !== 'admin')
+                {
+                    $( api.column( 3 ).footer() ).html(
+                        'Netto: '+(total*hourlyRate - total*hourlyRate*0.18)
+                    );
+
+                    $( api.column( 2 ).footer() ).html(
+                        'Brutto: '+total*hourlyRate
+                    );
+
+                    $( api.column( 1 ).footer() ).html(
+                        'Godziny: '+total
+                    );
+                }
             },
         });
         $("div.toolbar").html('<div class="dataTables_filter" style="float: left" ><label>Okres raportów:<input type="text" class=""  placeholder="" id="range" aria-controls="listOfExpenses"></label></div>');

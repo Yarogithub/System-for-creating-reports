@@ -249,4 +249,12 @@ class Report_model extends Model
     }
 
 
+    public function hourlyRate($userid)
+    {
+        return $this->db->selectOne('SELECT hourlyRate FROM user WHERE userid = :userid',
+            [
+                'userid' =>$userid
+            ]);
+    }
+
 }

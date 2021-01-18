@@ -14,7 +14,7 @@ class Report extends Controllers
 
         $this->view->title = 'Daily reports';
         $this->view->reportsAdminList = $this->model->reportsAdminList();
-
+        $this->view->hourlyRate = $this->model->hourlyRate($_SESSION['userid']);
 
         $this->view->reportsEmployeeList = $this->model->reportsEmployeeList($_SESSION['userid']);
         $this->view->render('report/index');
