@@ -16,6 +16,7 @@ class Report extends Controllers
         $this->view->reportsAdminList = $this->model->reportsAdminList();
         $this->view->hourlyRate = $this->model->hourlyRate($_SESSION['userid']);
 
+        $this->view->users = $this->model->usersList();
         $this->view->reportsEmployeeList = $this->model->reportsEmployeeList($_SESSION['userid']);
         $this->view->render('report/index');
     }
@@ -28,6 +29,14 @@ class Report extends Controllers
             'suggestions'=>$list
         ]));
         die;
+    }
+
+
+    public function getForUser($userid)
+    {
+            $list = $this->model->getForUser($userid);
+            echo json_encode(['data' => $list]);
+            die;
     }
 
     public function getFromRange()

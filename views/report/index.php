@@ -10,8 +10,22 @@
     <div class="table-wrapper">
         <div class="table-title">
             <div class="row">
-                <div class="col-sm-8"><h2>Reports <b>List</b></h2></div>
-                <div class="col-sm-4">
+                <div class="col-sm-6"><h2>Reports <b>List</b></h2>
+
+                </div>
+                <div class="col-sm-6">
+                    <?php if ($_SESSION['role'] == 'admin') : ?>
+                        <div class="float-right">
+                            <select class="form-control float-right" name="user" id="user" style="width: 200%">
+                                <option value="0">Wszyscy</option>
+                                <?php
+                                $users = $this->users;
+                                foreach ($users as $value): ?>
+                                    <option value="<?= $value['userid']; ?>"><?= $value['name'].' '.$value['lastname']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    <?php endif; ?>
 <!--                    <label>Raporty pomiędzy</label>-->
 <!--                    <input type="text" class="form-control float-right"  placeholder="" id="range" aria-controls="reportTable">-->
                     <input type="hidden" id="hourlyRate" value="<?=$this->hourlyRate['hourlyRate'] ?>">
@@ -349,19 +363,21 @@
                             i : 0;
                 };
 
-                var total = api
-                    .column(1,{search: 'applied'})
-                    .data()
-                    .reduce( function (a, b) {
-                        return (intVal(a) + intVal(b));
-                    }, 0 );
 
-                var hourlyRate = $('#hourlyRate').val();
 
                 var roleOfUser = '<?php echo $_SESSION['role'];?>';
 
                 if(roleOfUser !== 'admin')
                 {
+                    var total = api
+                        .column(1,{search: 'applied'})
+                        .data()
+                        .reduce( function (a, b) {
+                            return (intVal(a) + intVal(b));
+                        }, 0 );
+
+                    var hourlyRate = $('#hourlyRate').val();
+
                     $( api.column( 3 ).footer() ).html(
                         'Netto: '+(total*hourlyRate - total*hourlyRate*0.18)
                     );
@@ -373,6 +389,72 @@
                     $( api.column( 1 ).footer() ).html(
                         'Godziny: '+total
                     );
+                }else
+                {
+                    $(document).off('change').on('change','#user',function (e) {
+                        e.preventDefault();
+
+                        var userid = $("#user").val();
+
+                        if (userid !== '0')
+                        {
+
+                            $.ajax({
+                                type: "GET",
+                                url: window.location+'/getForUser/'+userid,
+                                data:'',
+                                cache: false,
+                                success: function (data) {
+                                    var newData = JSON.parse(data).data;
+
+                                    $("#hourlyRate").val(newData[0].hourlyRate);
+
+                                    if(jQuery.isEmptyObject(newData))
+                                    {
+                                        newData = [];
+                                    }
+                                    var table;
+                                    if ($.fn.dataTable.isDataTable('#reportTable')) {
+                                        table = $('#reportTable').DataTable();
+                                        table.clear();
+                                        table.rows.add(newData).draw();
+                                    }
+                                    else {
+                                        table = $('#reportTable').DataTable({
+                                            "data": newData,
+                                            "deferRender": true,
+                                            "pageLength": 25,
+                                            "retrieve": true,
+                                        });
+                                    }
+                                    var total = api
+                                        .column(1,{search: 'applied'})
+                                        .data()
+                                        .reduce( function (a, b) {
+                                            return (intVal(a) + intVal(b));
+                                        }, 0 );
+
+                                    var hourlyRate = $('#hourlyRate').val();
+
+                                    $( api.column( 3 ).footer() ).html(
+                                        'Netto: '+(total*hourlyRate - total*hourlyRate*0.18)
+                                    );
+
+                                    $( api.column( 2 ).footer() ).html(
+                                        'Brutto: '+total*hourlyRate
+                                    );
+
+                                    $( api.column( 1 ).footer() ).html(
+                                        'Godziny: '+total
+                                    );
+                                },
+                                error: function (data) {
+                                },
+                            });
+                        }
+
+
+                    });
                 }
             },
         });

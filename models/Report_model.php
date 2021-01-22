@@ -54,6 +54,8 @@ class Report_model extends Model
         return $reports;
     }
 
+
+
     public function getFromRange($start,$end,$userid)
     {
 
@@ -120,6 +122,13 @@ class Report_model extends Model
     public function reportsAdminList()
     {
         return $this->db->selectAll('SELECT r.reportid, r.numberOfHours, r.reportDate, r.createdAt, r.updatedAt, u.name, u.lastName FROM report as r,user as u WHERE u.userid=r.userid ORDER BY r.reportid ASC');
+    }
+
+    public function getForUser($userid)
+    {
+        return $this->db->selectAll('SELECT r.reportid, r.numberOfHours, r.reportDate, r.createdAt, r.updatedAt, u.name, u.lastName,u.hourlyRate FROM report as r,user as u WHERE u.userid=r.userid AND u.userid=:userid ORDER BY r.reportid ASC',[
+            'userid'=>$userid
+        ]);
     }
 
     public function getTasks($userid,$keyword)
@@ -255,6 +264,11 @@ class Report_model extends Model
             [
                 'userid' =>$userid
             ]);
+    }
+
+    public function usersList()
+    {
+        return $this->db->selectAll('SELECT userid,name,lastname  FROM user ');
     }
 
 }
