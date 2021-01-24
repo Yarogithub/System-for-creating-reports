@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center h-100">
     <div class="card">
         <div class="card-header">
-            <h3 class="mt-2">Set Your New Password</h3>
+            <h3 class="mt-2">Ustawianie nowego hasła</h3>
             <div class="d-flex justify-content-end social_icon">
                 <span><i class="fab fa-facebook-square"></i></span>
                 <span><i class="fab fa-google-plus-square"></i></span>
@@ -14,7 +14,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-key"></i></span>
                     </div>
-                    <input type="password" class="form-control" name="setPassword" placeholder="Password">
+                    <input type="password" class="form-control" name="setPassword" placeholder="Hasło">
                     <div class="invalid-feedback" id="setPasswordNewError">
                     </div>
 
@@ -23,7 +23,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-key"></i></span>
                     </div>
-                    <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm password">
+                    <input type="password" name="confirmPassword" class="form-control" placeholder="Potwierdź hasło">
                     <div class="invalid-feedback" id="confirmPasswordNewError">
                     </div>
                 </div>

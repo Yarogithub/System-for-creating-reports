@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-sm-8"><h2>Lista <b>Działów</b></h2></div>
                 <div class="col-sm-4">
-                    <a href="#" data-toggle="modal" data-target="#addDepartment" ><button type="button" class="btn btn-primary add-new"><i class="fa fa-plus"></i> Add New</button></a>
+                    <a href="#" data-toggle="modal" data-target="#addDepartment" ><button type="button" class="btn btn-primary add-new"><i class="fa fa-plus"></i> Dodaj</button></a>
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center h-100">
     <div class="card">
         <div class="card-header">
-            <h3>Sign In</h3>
+            <h3>Zaloguj</h3>
             <div class="d-flex justify-content-end social_icon">
                 <span><i class="fab fa-facebook-square"></i></span>
                 <span><i class="fab fa-google-plus-square"></i></span>
@@ -14,7 +14,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                     </div>
-                    <input type="text" class="form-control" name="login" placeholder="login">
+                    <input type="text" class="form-control" name="login" placeholder="Login">
                     <div class="invalid-feedback" id="loginLogInError">
                     </div>
 
@@ -23,7 +23,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-key"></i></span>
                     </div>
-                    <input type="password" name="password" class="form-control" placeholder="password">
+                    <input type="password" name="password" class="form-control" placeholder="Hasło">
                     <div class="invalid-feedback" id="passwordLogInError">
                     </div>
                 </div>
@@ -35,7 +35,7 @@
         </div>
         <div class="card-footer">
             <div class="d-flex justify-content-center">
-                <a href="#" data-toggle="modal" data-target="#myForgotPasswordModal">Forgot your password?</a>
+                <a href="#" data-toggle="modal" data-target="#myForgotPasswordModal">Zapomniałeś hasła?</a>
             </div>
         </div>
     </div>
@@ -46,13 +46,13 @@
         <div class="modal-content">
             <form id="forgotPasswordForm" action="<?php echo URL; ?>Login/forgotPassword" method="post">
                 <div class="modal-header">
-                    <h4 class="modal-title">Password: Forgot</h4>
+                    <h4 class="modal-title">Przypominanie: Hasła</h4>
                     <button type="button" name="close" class="close closeButton" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                        <p >Please enter your email we will send you link and you will able to set a new password for your account</p>
+                        <p >Wpisz swój email, na który ma zostać wysłany link aby ustawić nowe hasło</p>
                     <div class="form-group">
                         <label>Email</label>
                         <input type="text" name="loginCheck" class="form-control"  placeholder="Email">
@@ -61,8 +61,8 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <input type="submit" id="forgotPassword" class="btn btn-primary" value="Save">
+                    <button class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                    <input type="submit" id="forgotPassword" class="btn btn-primary" value="Wyślij">
                 </div>
             </form>
         </div>

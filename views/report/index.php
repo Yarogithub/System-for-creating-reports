@@ -10,7 +10,7 @@
     <div class="table-wrapper">
         <div class="table-title">
             <div class="row">
-                <div class="col-sm-6"><h2>Reports <b>List</b></h2>
+                <div class="col-sm-6"><h2>Lista <b>Raportów</b></h2>
 
                 </div>
                 <div class="col-sm-6">
@@ -46,7 +46,7 @@
                     <th>Data Raportu</th>
                     <th>Data utworzenia</th>
                     <th>Data edycji</th>
-                    <th>Action</th>
+                    <th>Akcje</th>
 
                 <?php else: ?>
                     <th>ID</th>
@@ -55,7 +55,7 @@
                     <th>Data Raportu</th>
                     <th>Data utworzenia</th>
                     <th>Data edycji</th>
-                    <th>Action</th>
+                    <th>Akcje</th>
                 <?php endif; ?>
 
 
@@ -115,7 +115,7 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Czas zadania</th>
                                     <th scope="col">Zadanie</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Akcja</th>
                                 </tr>
                                 </thead>
                                 <tbody id="append">
@@ -137,7 +137,7 @@
                                             <div class="autocomplete-suggestion"></div>
                                         </div>
                                     </td>
-                                    <td class="valueActionWidth"><button type="button"  class="btn btn-danger deleteItem">Delete</button></td>
+                                    <td class="valueActionWidth"><button type="button"  class="btn btn-danger deleteItem">Usuń</button></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -161,7 +161,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
             <div class="modal-header">
-                <h1 class="text-dark">Report: Edit</h1>
+                <h1 class="text-dark">Edycja: Raportu</h1>
             </div>
             <div class="modal-body">
                 <form id="editForm">
@@ -180,7 +180,7 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Czas zadania</th>
                                 <th scope="col">Zadanie</th>
-                                <th scope="col">Action</th>
+                                <th scope="col">Akcja</th>
                             </tr>
                             </thead>
                             <tbody id="append">
@@ -190,8 +190,8 @@
                     </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <input type="submit" value="Save" id="saveModalButton" class="btn btn-primary">
+                <button class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                <input type="submit" value="Zapisz" id="saveModalButton" class="btn btn-primary">
             </div>
             </form>
         </div>
@@ -204,7 +204,7 @@
     <div class="modal-dialog modal-confirm">
         <div class="modal-content">
             <div class="modal-header flex-column">
-                <h4 class="modal-title w-100">Are you sure?</h4>
+                <h4 class="modal-title w-100">Usuwanie: Raportu</h4>
                 <button type="button" class="close closeButton" data-dismiss="modal"><span
                             aria-hidden="true">&times;</span>
                 </button>
@@ -213,13 +213,13 @@
             <div class="modal-body">
                 <form id="deleteForm">
                     <div class="form-group">
-                        <p>Do you really want to delete these records? This process cannot be undone.</p>
+                        <p>Jesteś pewien, że chcesz usunąć ten raport. Ta akcja nie może zostać cofnięta.</p>
                         <input type="hidden" name="getId"/>
                     </div>
 
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <input type="submit" value="DELETE" id="deleteModalButton" class="btn btn-danger">
+                <button class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                <input type="submit" value="Usuń" id="deleteModalButton" class="btn btn-danger">
             </div>
             </form>
             </div>
@@ -461,7 +461,7 @@
         $("div.toolbar").html('<div class="dataTables_filter" style="float: left" ><label>Okres raportów:<input type="text" class=""  placeholder="" id="range" aria-controls="listOfExpenses"></label></div>');
         $("div.br").html('<div style="float: right">\n' +
             '                            <a href="#" data-toggle="modal" data-target="#myModal">\n' +
-            '                        <button type="button" class="btn btn-primary add-new"><i class="fa fa-plus"></i> Add New\n' +
+            '                        <button type="button" class="btn btn-primary add-new"><i class="fa fa-plus"></i> Dodaj\n' +
             '                        </button>\n' +
             '                    </a>' +
             '    </div><br/><br/>');
@@ -531,7 +531,7 @@
                                 <div class="autocomplete-suggestion"></div>
                            </div>
                     </td>
-                    <td class="valueActionWidth"><button type="button"  class="btn btn-danger deleteItem">Delete</button></td>
+                    <td class="valueActionWidth"><button type="button"  class="btn btn-danger deleteItem">Usuń</button></td>
                   </tr>`;
 
         let tableBody = $(".itemsTable tbody");
@@ -596,7 +596,7 @@
                                         <div class="autocomplete-suggestion"></div>
                                     </div>
                                 </td>
-                                <td class="valueActionWidth"><button type="button"  class="btn btn-danger deleteItem">Delete</button></td>
+                                <td class="valueActionWidth"><button type="button"  class="btn btn-danger deleteItem">Usuń</button></td>
                             </tr>`;
                     let tableBody = $(".itemsTable tbody");
                     tableBody.append(tr);

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-Ua-Compatible" content="IE=edge">
 
-	<title><?=(isset($this->title)) ? $this->title : 'Report'; ?></title>
+	<title><?=(isset($this->title)) ? $this->title : 'Raporty'; ?></title>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 	<link rel="stylesheet" href="<?php echo URL; ?>public/css/default.css"/>
@@ -57,7 +57,7 @@
 
         <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
 
-            <a class="navbar-brand" href="<?php echo URL; ?>index" >Reports</a>
+            <a class="navbar-brand" href="<?php echo URL; ?>index" >Raporty</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu" aria-controls="mainmenu" aria-expanded="false" aria-label="Nav Switch">
                 <span class="navbar-toggler-icon"></span>
@@ -69,41 +69,41 @@
 
                     <?php if (Session::get('loggedIn') == false):?>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo URL; ?>index">Index</a>
+                            <a class="nav-link" href="<?php echo URL; ?>index">Indeks</a>
                         </li>
 
                     <?php endif; ?>
                     <?php if (Session::get('loggedIn') == true):?>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo URL; ?>index">Index</a>
+                            <a class="nav-link" href="<?php echo URL; ?>index">Indeks</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo URL; ?>Report">Reports</a>
+                            <a class="nav-link" href="<?php echo URL; ?>Report">Raporty</a>
                         </li>
 
                         <?php if (Session::get('role') == 'admin'):?>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo URL; ?>User">Users</a>
+                            <a class="nav-link" href="<?php echo URL; ?>User">Użytkownicy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo URL; ?>Division">Divisions</a>
+                            <a class="nav-link" href="<?php echo URL; ?>Division">Filary</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo URL; ?>Department">Departments</a>
+                            <a class="nav-link" href="<?php echo URL; ?>Department">Działy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo URL; ?>Task">Tasks</a>
+                            <a class="nav-link" href="<?php echo URL; ?>Task">Zadania</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo URL; ?>Position">Positions</a>
+                            <a class="nav-link" href="<?php echo URL; ?>Position">Stanowiska</a>
                         </li>
                         <?php endif; ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo URL; ?>Report/logout">Logout</a>
+                            <a class="nav-link" href="<?php echo URL; ?>Report/logout">Wyloguj</a>
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo URL; ?>login">Login</a>
+                            <a class="nav-link" href="<?php echo URL; ?>login">Zaloguj</a>
                         </li>
                     <?php endif; ?>
 

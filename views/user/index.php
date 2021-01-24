@@ -2,9 +2,9 @@
     <div class="table-wrapper">
         <div class="table-title">
             <div class="row">
-                <div class="col-sm-8"><h2>User <b>List</b></h2></div>
+                <div class="col-sm-8"><h2>Lista <b>Uzytkowników</b></h2></div>
                 <div class="col-sm-4">
-                    <a href="#" data-toggle="modal" data-target="#myUserModal" ><button type="button" class="btn btn-primary add-new"><i class="fa fa-plus"></i> Add New</button></a>
+                    <a href="#" data-toggle="modal" data-target="#myUserModal" ><button type="button" class="btn btn-primary add-new"><i class="fa fa-plus"></i> Dodaj</button></a>
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@
 <!--                <th>Kraj</th>-->
 <!--                <th>Miejscowość</th>-->
                 <th>Stawka godzinowa</th>
-                <th>Action</th>
+                <th>Akcje</th>
             </tr>
             </thead>
 
@@ -71,8 +71,8 @@
                     <div class="form-group">
                         <label for="userRole">Rola</label>
                         <select class="form-control custom-select" name="role" id="userRole">
-                            <option value="admin" name="admin">admin</option>
-                            <option value="employee" name="employee">employee</option>
+                            <option value="admin" name="admin">administrator</option>
+                            <option value="employee" name="employee">pracownik</option>
                         </select>
                         <div class="invalid-feedback" id="roleError">
                         </div>
@@ -145,8 +145,8 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <input type="submit" id="userSave" class="btn btn-primary" value="Save">
+                    <button class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                    <input type="submit" id="userSave" class="btn btn-primary" value="Dodaj">
                 </div>
             </form>
         </div>
@@ -158,7 +158,7 @@
         <div class="modal-content">
             <form id="userEdit" action="" method="post">
                 <div class="modal-header">
-                    <h4 class="modal-title">User: Edit</h4>
+                    <h4 class="modal-title">Edycja: Użytkownika</h4>
                     <button type="button" class="close closeButton" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -180,8 +180,8 @@
                     <div class="form-group">
                         <label>Rola</label>
                         <select class="form-control setRole" name="role">
-                            <option value="admin" name="admin">admin</option>
-                            <option value="employee" name="employee">employee</option>
+                            <option value="admin" name="admin">administrator</option>
+                            <option value="employee" name="employee">pracownik</option>
                         </select>
                         <div class="invalid-feedback" id="roleError">
                         </div>
@@ -254,8 +254,8 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <input type="submit" class="btn btn-primary" value="Save">
+                    <button class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                    <input type="submit" class="btn btn-primary" value="Zapisz">
                 </div>
                 </div>
             </form>
@@ -268,19 +268,19 @@
         <div class="modal-content">
             <form id="userDelete" action="" method="post">
                 <div class="modal-header">
-                    <h4 class="modal-title">User: Delete</h4>
+                    <h4 class="modal-title">Usuwanie: Użytkownika</h4>
                     <button type="button" class="close closeButton" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <p>Do you really want to delete these user? This process cannot be undone.</p>
+                        <p>Czy na pewno chcesz usunąć tego użytkownika.</p>
                         <input type="hidden" id="deleteId">
                     </div>
                 <div class="modal-footer justify-content-between">
-                    <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <input type="submit" class="btn btn-danger"  value="Delete">
+                    <button class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                    <input type="submit" class="btn btn-danger"  value="Usuń">
                 </div>
             </form>
         </div>

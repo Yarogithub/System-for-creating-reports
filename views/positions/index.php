@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-sm-8"><h2>Lista <b>Stanowisk</b></h2></div>
                 <div class="col-sm-4">
-                    <a href="#" data-toggle="modal" data-target="#addposition" ><button type="button" class="btn btn-primary add-new"><i class="fa fa-plus"></i> Add New</button></a>
+                    <a href="#" data-toggle="modal" data-target="#addposition" ><button type="button" class="btn btn-primary add-new"><i class="fa fa-plus"></i> Dodaj</button></a>
                 </div>
             </div>
         </div>
@@ -72,8 +72,8 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <input type="submit" class="btn btn-primary"  value="Save">
+                    <button class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                    <input type="submit" class="btn btn-primary"  value="Zapisz">
                 </div>
         </div>
         </form>
@@ -93,7 +93,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <p>Jesteś pewien, że chcesz usunąć ten filar. Ta akcja nie może zostać cofnięta.</p>
+                        <p>Jesteś pewien, że chcesz usunąć to stanowisko. Ta akcja nie może zostać cofnięta.</p>
                         <input type="hidden" id="deletePositionId">
                     </div>
                     <div class="modal-footer justify-content-between">
