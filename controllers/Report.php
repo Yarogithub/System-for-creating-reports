@@ -12,7 +12,7 @@ class Report extends Controllers
     public function index()
     {
 
-        $this->view->title = 'Daily reports';
+        $this->view->title = 'Dzienne raporty';
         $this->view->reportsAdminList = $this->model->reportsAdminList();
         $this->view->hourlyRate = $this->model->hourlyRate($_SESSION['userid']);
 

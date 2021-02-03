@@ -160,9 +160,10 @@ class Report_model extends Model
             'reportDate'=>$report->getReportDate(),
         ]);
 
-        $reportid =  $this->db->selectOne('SELECT reportid FROM report WHERE reportDate = :reportDate',
+        $reportid =  $this->db->selectOne('SELECT reportid FROM report WHERE reportDate = :reportDate AND userid=:userid',
             [
-               'reportDate' =>$report->getReportDate()
+               'reportDate' =>$report->getReportDate(),
+                'userid'=>$report->getUserid()
             ]);
 
         foreach ($report->getCompletedTasks() as $value)

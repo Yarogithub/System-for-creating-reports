@@ -23,25 +23,25 @@ class Login extends Controllers
         $errors = [];
 
 
-//        if (!$_POST['login']){
-//            $errors['login'] = 'You have to fill this field';
-//        }
-//
-//        if (!$_POST['password']){
-//            $errors['password'] = 'You have to fill this field';
-//        }
+        if (!$_POST['login']){
+            $errors['login'] = 'You have to fill this field';
+        }
+
+        if (!$_POST['password']){
+            $errors['password'] = 'You have to fill this field';
+        }
 
         $user = $this->model->getUserByLogin($_POST['login']);
 
 	    if(!empty($user['login']))
         {
-//
-//            $verify = (password_verify($_POST['password'], $user['password']));
-//
-//            if ($verify == false)
-//            {
-//                $errors['password'] = 'Incorrect password';
-//            }
+
+            $verify = (password_verify($_POST['password'], $user['password']));
+
+            if ($verify == false)
+            {
+                $errors['password'] = 'Incorrect password';
+            }
         }else{
             $errors['login'] = 'This user doesnt exist ';
         }
