@@ -94,7 +94,7 @@
                 url: frm.attr('action'),
                 data: frm.serialize(),
                 success: function (data) {
-                    window.location.href = "<?php echo URL; ?>/index";
+                    window.location.href = "<?php echo URL; ?>index";
                 },
                 error: function (data) {
                     me.data('requestRunning',false);

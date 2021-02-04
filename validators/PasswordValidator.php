@@ -46,7 +46,6 @@ class PasswordValidator
         }elseif ($confirmPassword != $password)
         {
             $this->errors['confirmPassword'] = "Your passwords are not the same";
-
         }
     }
 

@@ -61,10 +61,11 @@
 
             $.ajax({
                 type: frm.attr('method'),
-                url: frm.attr('action'),
+                url: window.location,
                 data: frm.serialize(),
                 success: function (data) {
-                    window.location.href = "<?php echo URL; ?>/login";
+                    window.location.href = "<?php echo URL; ?>login";
+                    //window.location.href = "<?php //Session::destroy();  ?>//";
                 },
                 error: function (data) {
 

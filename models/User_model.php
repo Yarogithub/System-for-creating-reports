@@ -52,7 +52,7 @@ class User_model extends Model
 
     }
 
-    public function setNewPassword(Users $data)
+    public function setNewPassword($data)
     {
         $this->db->update('user',
             [

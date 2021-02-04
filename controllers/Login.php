@@ -82,7 +82,7 @@ class Login extends Controllers
         }
 
         $subject = 'Set New Password';
-        $body = 'http://localhost/reports/login/setNewPassword?token='.$user->getToken();
+        $body = 'http://localhost/reports/Login/setNewPassword?token='.$user->getToken();
 
 
         $mailer = new Mailer();

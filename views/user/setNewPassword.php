@@ -64,7 +64,7 @@
                 url: frm.attr('action'),
                 data: frm.serialize(),
                 success: function (data) {
-                    window.location.href = "<?php echo URL; ?>/login";
+                    window.location.href = "<?php echo URL; ?>login";
                 },
                 error: function (data) {
 

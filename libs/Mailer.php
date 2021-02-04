@@ -18,8 +18,8 @@ class Mailer
             $mail->isSMTP(); // using SMTP protocol
             $mail->Host = 'smtp.gmail.com'; // SMTP host as gmail
             $mail->SMTPAuth = true;  // enable smtp authentication
-            $mail->Username = 'jd567872@gmail.com';  // sender gmail host
-            $mail->Password = 'p@ssword98'; // sender gmail host password
+            $mail->Username = 'raportytest321@gmail.com';  // sender gmail host
+            $mail->Password = 'zaq1@WSX'; // sender gmail host password
             $mail->SMTPOptions = array(
                 'ssl' => array(
                     'verify_peer' => false,
@@ -30,8 +30,8 @@ class Mailer
             $mail->SMTPSecure = 'tls';  // for encrypted connection
             $mail->Port = 587;   // port for SMTP
 
-            $mail->setFrom('jd567872@gmail.com', "Sender"); // sender's email and name
-            $mail->addAddress($email, "Receiver");  // receiver's email and name
+            $mail->setFrom('raportytest321@gmail.com', "Dzienne raporty"); // sender's email and name
+            $mail->addAddress($email, "Użytkownik");  // receiver's email and name
 
             $mail->Subject = $subject;
             $mail->Body    = $body;

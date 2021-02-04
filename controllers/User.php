@@ -43,18 +43,18 @@ class User extends Controllers
         $users ->setDepartmentid($_POST['departmentId']);
         $users ->setToken(uniqid() . uniqid());
 
-        $userValidator = new UserValidator();
-        $errors = $userValidator->validateUser($users);
-
-        if (!empty($errors))
-        {
-            header('HTTP/1.1 400 Bad Request');
-            echo json_encode(['errors' => $errors]);
-            die;
-        }
+//        $userValidator = new UserValidator();
+//        $errors = $userValidator->validateUser($users);
+//
+//        if (!empty($errors))
+//        {
+//            header('HTTP/1.1 400 Bad Request');
+//            echo json_encode(['errors' => $errors]);
+//            die;
+//        }
 
         $subject = 'Set First Password';
-        $body = 'http://localhost/reports/user/setFirstPassword?token='.$users->getToken();
+        $body = 'http://localhost/reports/User/setFirstPassword?token='.$users->getToken();
 
 
         $mailer = new Mailer();
@@ -76,6 +76,8 @@ class User extends Controllers
             $token = $_GET['token'];
             $password = $_POST['setPassword'];
             $confirmPassword = $_POST['confirmPassword'];
+
+
 
             $user = new Users();
             $user ->setPassword($password);

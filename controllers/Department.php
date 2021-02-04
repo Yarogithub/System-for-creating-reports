@@ -14,9 +14,6 @@ class Department extends Controllers
         $this->view->title = 'Departments';
         $this->view->get = $this->model->get();
         $this->view->divisions = $this->model->getDivisions();
-//        echo '<pre>';
-//        print_r($this->view->divisions);
-//        die;
         $this->view->render('departments/index');
     }
 

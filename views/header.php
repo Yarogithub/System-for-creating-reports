@@ -73,7 +73,7 @@
                         </li>
 
                     <?php endif; ?>
-                    <?php if (Session::get('loggedIn') == true):?>
+                    <?php if(Session::get('loggedIn') == true && strpos($_GET['url'], 'setFirstPassword') === false  && strpos($_GET['url'], 'setNewPassword') === false && strpos($_GET['url'], 'login') === false) :?>
                         <li class="nav-item">
                             <a class="nav-link" href="<?php echo URL; ?>index">Indeks</a>
                         </li>
